@@ -21,4 +21,16 @@ services:
       - "dbhost:${DBHOST}"
     volumes:
       - .:/src
+    networks:
+      app_network:
     command: python3 manage.py runserver 0.0.0.0:8000
+
+networks:
+  app_network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: 'false'
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.${DOCKER_IP}.0.0/24
