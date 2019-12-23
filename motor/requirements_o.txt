@@ -44,7 +44,7 @@ pika==0.10.0
 pg8000==1.13.2
 ply==3.10
 psycopg2==2.8.3
-pycryptodome==3.5.1
+pycryptodome==3.6.6
 PyExecJS==1.1.0
 PyGithub==1.31
 pyparsing==2.2.0
