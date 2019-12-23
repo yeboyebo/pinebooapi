@@ -1,0 +1,44 @@
+{% extends "YBWEB/dashboard.html" %}
+
+{% load static %}
+{% load i18n %}
+{% load includeJSX %}
+{% load YBtools %}
+
+{% block main %}
+
+    <div class="loginPanel">
+        <div class="loginPanelHeader">
+            <div class="logError">{{error}}</div>
+            <img src="{% static 'dist/img/logo/logo.png' %}" alt="logo" className="logo" style="margin-left:17%"></img>
+        </div>
+        <div class="loginPanelBody">
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="account">
+                <div class="form-group label-floating">
+                    <label class="control-label" for="focusedInput1">Usuario</label>
+                    <input type="text" name="username" class="loginInput form-control" value={{usuario}} disabled=true>
+                </div>
+                <div class="form-group label-floating loginInputPass">
+                    <label class="control-label" for="focusedInput1">Contraseña actual</label>
+                    <input type="password" name="oldpassword" class="loginInput form-control" required>
+                </div>
+                <div class="form-group label-floating loginInputPass">
+                    <label class="control-label" for="focusedInput1">Nueva contraseña</label>
+                    <input type="password" name="password" class="loginInput form-control" required>
+                </div>
+                <div class="form-group label-floating loginInputPass">
+                    <label class="control-label" for="focusedInput1">Repite nueva contraseña</label>
+                    <input type="password" name="password2" class="loginInput form-control" required>
+                </div>
+                <div class="loginPanelFooter">
+                    <button name="loginSubmit" href="javascript:void(0)" class="btn btn-flat btn-primary loginButton">Modificar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+{% block endjs %}
+{% endblock %}

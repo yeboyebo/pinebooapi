@@ -1,0 +1,37 @@
+{% extends "YBWEB/index.html" %}
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block favicon %}
+    <link rel="icon" type="image/png" href="{% static 'dist/img/logo/icon.png' %}" />
+{% endblock %}
+
+{% block css %}
+    <link rel="manifest" href="{% static 'bundles/manifest.json' %}">
+    <!-- Material Design fonts -->
+    <!--link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css"-->
+    <link rel="stylesheet" type="text/css" href="{% static 'bundles/main.css' %}">            
+{% endblock %}
+
+{% block js %} 
+    <script src="{% static 'bundles/main.js' %}"></script>
+    <script src="{% static 'bundles/auxcss.js' %}"></script>
+    <script src="{% static 'dist/notifications/notifications.js' %}"></script>
+    <script>
+        {% include "YBWEB/inicializacionJS.html" %}
+    </script>
+{% endblock %}
+
+{% block nav %}
+    <div id="YB_BARRANAVEGACION"/>
+{% endblock %}
+
+
+<script>
+    $.material.init();
+</script>

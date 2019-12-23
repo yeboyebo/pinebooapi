@@ -1,0 +1,40 @@
+{
+    "querystring": {
+        "p_l": 40,
+        "p_c": true
+    },
+    "schema": {},
+    "layout": {
+        "masterUsuarios": {
+            "componente": "YBList",
+            "label": "Compañias",
+            "prefix": "aqn_companies",
+            "filter": "buscador",
+            "columns": [
+                {"tipo": "field", "key": "nombre", "avatar": true},
+                {"tipo": "field", "listpos": "body", "key": "descripcion"},
+                {
+                    "tipo": "act",
+                    "key": "delete",
+                    "label": "Borrar Linea",
+                    "success": [
+                        {"slot": "refrescar"}
+                    ]
+                }
+            ],
+            "rowclick": "link"
+        },
+        "newRecordTelest": {
+            "componente": "YBNewRecordGoTo",
+            "class": "info",
+            "icon": "add",
+            "goto": "/signup"
+        }
+    },
+    "acciones": {
+        "delete": {
+            "action": "deleteRow",
+            "icon": "delete"
+        }
+    }
+}

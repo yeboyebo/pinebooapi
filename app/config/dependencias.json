@@ -1,0 +1,10 @@
+{
+    "fk": "True",
+    "fun_aq": "fun_oficial",
+    "dependencias": [
+        {
+            "version": "v1.0",
+            "key": "flfactppal"
+        }
+    ]
+}

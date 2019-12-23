@@ -1,0 +1,32 @@
+{% extends "YBWEB/dashboard.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+
+    <div class="loginPanel">
+        <div class="loginPanelHeader">
+            <div class="logError">{{error}}</div>
+            <img src="{% static 'dist/img/logo/logo.png' %}" alt="logo" className="logo" style="margin-left:17%"></img>
+        </div>
+        <div class="loginPanelBody">
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="login">
+                <div class="form-group label-floating">
+                    <label class="control-label" for="focusedInput1">Usuario</label>
+                    <input type="text" name="username" class="loginInput form-control" autofocus>
+                </div>
+                <div class="form-group label-floating loginInputPass">
+                    <label class="control-label" for="focusedInput1">Contraseña</label>
+                    <input type="password" name="password" class=" form-control">
+                </div>
+                <div class="loginPanelFooter">
+                    <button name="loginSubmit" href="javascript:void(0)" class="btn btn-flat btn-primary loginButton">Entrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

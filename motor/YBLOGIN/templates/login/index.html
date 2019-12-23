@@ -1,0 +1,23 @@
+<html>
+<head>
+<script>
+    _onWebSocketMessage = function(e) {
+        console.log(e);
+        var content = JSON.parse(e.data);
+        console.log(content)
+    };
+    var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+    var socket = new WebSocket(ws_scheme + "://" + window.location.host + "/algo/");
+
+    socket.onmessage = _onWebSocketMessage;
+    if (socket.readyState == WebSocket.OPEN) {
+        socket.onopen();
+        console.log("open??")
+    }
+    //socket.send('hello');
+</script>
+</head>
+<body>
+    <div id="contenido">contenido</div>
+<body>
+</html>

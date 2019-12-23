@@ -1,0 +1,24 @@
+version: "2.1"
+
+services:
+
+  django:
+    image: django
+    build: .
+    user: yeboyebo
+    restart: always
+    working_dir: /src/app/
+    environment:
+      - TZ=Europe/Amsterdam
+      - LC_ALL=C.UTF-8
+      - LANG=C.UTF-8
+      - LANGUAGE=C.UTF-8
+    env_file:
+      - ./.env
+    ports:
+      - "${PORT}:8000"
+    extra_hosts:
+      - "dbhost:${DBHOST}"
+    volumes:
+      - .:/src
+    command: python3 manage.py runserver 0.0.0.0:8000
