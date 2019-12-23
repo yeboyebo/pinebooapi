@@ -39,7 +39,7 @@ django-secure==1.0.1
 djangorestframework==3.11.0
 docutils==0.15.2
 easygui==0.98.1
-ecdsa==0.13
+ecdsa==0.13.3
 entrypoints==0.3
 et-xmlfile==1.0.1
 fernet==1.0.1
