@@ -132,6 +132,7 @@ def token_auth(request):
     else:
         return HttpResponse(json.dumps({'error': 'Usuario y contraseña no coinciden'}),
                         status=404)
-
-    return HttpResponse(json.dumps({'token': token.key}), status=200)
+    resul = HttpResponse(json.dumps({'token': token.key}), status=200)
+    resul['Access-Control-Allow-Origin'] = '*'
+    return resul
 
