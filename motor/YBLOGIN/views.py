@@ -116,8 +116,14 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def token_auth(request):
     print(request.POST)
-    username = request.POST.get("username", None)
-    password = request.POST.get("password", None)
+    try:
+        params = json.loads(request.body.decode("utf-8"))
+        username = params["username"]
+        password = params["password"]
+
+    except Exception:
+        username = request.POST.get("username", None)
+        password = request.POST.get("password", None)
     print(username,"________", password)
 
     user = authenticate(username=username, password=password)
