@@ -115,7 +115,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def token_auth(request):
-    print(request.POST)
     try:
         params = json.loads(request.body.decode("utf-8"))
         username = params["username"]
@@ -124,15 +123,14 @@ def token_auth(request):
     except Exception:
         username = request.POST.get("username", None)
         password = request.POST.get("password", None)
-    print(username,"________", password)
 
     user = authenticate(username=username, password=password)
     if user is not None:
         token, _ = Token.objects.get_or_create(user=user)
+        resul = HttpResponse(json.dumps({'token': token.key}), status=200)
     else:
-        return HttpResponse(json.dumps({'error': 'Usuario y contraseña no coinciden'}),
-                        status=404)
-    resul = HttpResponse(json.dumps({'token': token.key}), status=200)
+        resul = HttpResponse(json.dumps({'error': 'Usuario y contraseña no coinciden'}), status=404)
+        
     resul['Access-Control-Allow-Origin'] = '*'
     return resul
 
