@@ -15,6 +15,12 @@ class apiRouter(SimpleRouter):
             initkwargs={},detail=True
         ),
         Route(
+            url=r'(?P<modulo>\w+)/accion/(?P<accion>\w+)$',
+            mapping={'get': 'ejecutaraccioncontrolador', 'post': 'ejecutaraccioncontrolador', 'options': 'optionsFun'},
+            name='{basename}-accion-REST',
+            initkwargs={}
+        ),
+        Route(
             url=r'(?P<modulo>\w+)/(?P<pk>\w+)',
             mapping={'get': 'ejecutaraccioncontrolador', 'post': 'ejecutaraccioncontrolador', 'options': 'optionsFun'},
             name='{basename}-accion-REST',
