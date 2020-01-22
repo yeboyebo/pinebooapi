@@ -20,6 +20,8 @@ services:
       - "dbhost:${DBHOST}"
     volumes:
       - .:/src
+      - ${PINEBOODIR}:/pineboo/pineboo
+      - ${MODULESDIR}:/pineboo/modules
     command: python3 manage.py runserver 0.0.0.0:8000
     networks:
       app_network:

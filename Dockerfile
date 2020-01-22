@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y apt-utils build-essential python3-pip v
 ENV TZ=Europe/Madrid
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+RUN mkdir /pineboo/
 RUN mkdir /src/
 WORKDIR /src/
 ADD requirements.txt /src/

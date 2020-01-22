@@ -1,3 +1,5 @@
+import os
+
 ALLOWED_HOSTS = (
     'localhost',
     '127.0.0.1',
@@ -7,13 +9,14 @@ ALLOWED_HOSTS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pruebas',
-        'USER': 'juanma',
-        'PASSWORD': '55555',
+        'NAME': os.environ.get('DBNAME'),
+        'USER': os.environ.get('DBUSER'),
+        'PASSWORD': os.environ.get('DBPASSWORD'),
         'HOST': 'dbhost',
-        'PORT': '5432',
+        'PORT': os.environ.get('DBPOST'),
         'ATOMIC_REQUESTS': False
     }
 }
 
-StaticLoader = False
+StaticLoader = True
+dirs = [True, "/pineboo/modules/fun/ruta/scripts",]
