@@ -124,13 +124,29 @@ def token_auth(request):
         username = request.POST.get("username", None)
         password = request.POST.get("password", None)
 
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        token, _ = Token.objects.get_or_create(user=user)
-        resul = HttpResponse(json.dumps({'token': token.key}), status=200)
-    else:
-        resul = HttpResponse(json.dumps({'error': 'Usuario y contraseña no coinciden'}), status=404)
-        
+    # Comprobamos usuario con pineboo
+    try:
+        authusername = APIQSA.login(username, password)
+        if authusername:
+            user = User.objects.filter(username=str(authusername))
+            if user.exists():
+                authuser = authenticate(username=str(authusername), password=password)
+                if authuser is None:
+                    user = User.objects.get(username__exact=str(authusername))
+                    user.set_password(password)
+                    user.save()
+                    authuser = authenticate(username=str(authusername), password=password)
+            else:
+                user = User.objects.create_user(username=str(authusername), password=password)
+                user.is_staff = False
+                user.save()
+                authuser = authenticate(username=str(authusername), password=password)
+            token, _ = Token.objects.get_or_create(user=authuser)
+            resul = HttpResponse(json.dumps({'token': token.key}), status=200)
+    except Exception as e:
+        print("-----------------------")
+        print(e)
+        resul = HttpResponse(json.dumps({'error': str(e)}), status=404)
     resul['Access-Control-Allow-Origin'] = '*'
     return resul
 
