@@ -12,7 +12,6 @@ from django.http import HttpResponse
 from django.http import HttpResponseServerError
 
 from django.db import transaction
-from django.contrib.sessions.models import Session
 
 from YBUTILS.viewREST import filtersPagination
 from YBUTILS.APIQSA import APIQSA
@@ -25,71 +24,20 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         super().__init__(*args, **kwargs)
 
     def optionsFun(self, request, modulo, controlador=None, accion=None, pk=None):
-
-        # TO DO: Ver si es posible conmprobar que se está usando la cookie de sesión
-
         resp = HttpResponse("{}", status=200, content_type="application/json")
         resp["Access-Control-Allow-Origin"] = "*"
-        resp["Access-Control-Allow-Headers"] = "X-SessionID"
+        resp["Access-Control-Allow-Headers"] = "Authorization"
         resp["Access-Control-Allow-Credentials"] = True
         resp["Access-Control-Allow-Methods"] = "GET,POST"
 
         return resp
 
-    def dame_controlador(self, modulo, controlador, accion):
-
-        try:
-            if controlador is None:
-                # nombre_fichero = self.dame_nombre_fichero('GET', modulo)
-                # print("nombre_fichero " + nombre_fichero)
-
-                print(0)
-                # spec = find_spec(nombre_fichero, path=self._aplicacion + "/" + modulo)
-                print(str(self._aplicacion + "/" + modulo))                
-                # controller = importlib.import_module(nombre_fichero, package=self._aplicacion + "/ot/" + modulo )
-                controller = importlib.import_module(self._aplicacion + "." + modulo)
-                print(str(controller))                
-                # controller_class = getattr(controller, modulo, None)
-                controller_class = getattr(controller, modulo, None)
-                print("controller_class " + str(controller_class))
-            else:
-                controller = importlib.import_module(self._aplicacion + "." + modulo + "." + controlador + "." + accion)
-                controller_class = getattr(controller, accion, None)
-
-        except ImportError as e:
-            raise NameError("No se pudo importar el controlador {}.{} porque no se encontró un módulo: {}".format(self._aplicacion, controlador, e))
-
-        except SyntaxError as e:
-            raise NameError("No se pudo importar el controlador {}.{} por un problema de sintaxis: {}".format(self._aplicacion, controlador, e))
-
-        except Exception as e:
-            raise NameError("No se pudo importar el controlador {}.{}: {}".format(self._aplicacion, controlador, e))
-
-        return controller_class
-
-    
-    def dame_nombre_fichero(self, metodo, nombre_modelo):
-
-        nombre_fichero = None
-        if metodo in ('GET', 'POST'):
-            nombre_fichero = metodo.lower() + '_' + nombre_modelo
-
-        return nombre_fichero
-
-
-    def ejecutaraccioncontrolador(self, request, modulo, controlador=None, accion=None, pk=None):
+    def ejecutaraccioncontrolador(self, request, modulo, accion=None, pk=None):
         current_user = request.user
         username = request.user.username
-        # if username in ('AnonymousUser', ''):
-        #     idSession = request.META.get("HTTP_X_SESSIONID")
-        #     print("idSession", str(idSession))
-        #     s = Session.objects.get(session_key=idSession)
-        #     print("s", str(s))
-        #     session_data = s.get_decoded()
-        #     username = session_data.get('_auth_user_id')
 
         print("USER: " + str(username))
-        print("ejecutaraccioncontrolador!!", str(modulo), str(controlador), str(accion), str(pk))
+        print("ejecutaraccioncontrolador!!", str(modulo), str(accion), str(pk))
         
         params = None
         if request.method == "POST":
@@ -107,7 +55,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         elif request.method == "GET":
             params = filtersPagination._generaGetParam(request.query_params)
 
-        # controller = self.dame_controlador(modulo, controlador, accion)
+        params = self.dame_params_from_request(request, params)
 
         try:
             if request.method == "GET":
@@ -131,7 +79,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             return result
 
         except Exception as e:
-            print('Excepción ', str(e))
+            print('Excepcion ', str(e))
 
             ex_type, ex_value, ex_traceback = sys.exc_info()
 
