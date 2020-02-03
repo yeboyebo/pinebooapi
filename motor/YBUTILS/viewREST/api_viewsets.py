@@ -40,7 +40,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         print("ejecutaraccioncontrolador!!", str(modulo), str(accion), str(pk))
         
         params = None
-        if request.method == "POST":
+        if request._method == "POST":
             try:
                 if pk is not None:
                     params = {}
@@ -50,7 +50,9 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
                     params = json.loads(request.body.decode("utf-8"))
 
             except Exception:
-                params = filtersPagination._generaPostParam(request._data)["POST"]
+                params = {}
+                params['pk'] = pk
+                params['data'] = filtersPagination._generaPostParam(request._data)["POST"]
 
         elif request.method == "GET":
             params = filtersPagination._generaGetParam(request.query_params)
