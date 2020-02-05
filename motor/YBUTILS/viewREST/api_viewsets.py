@@ -32,6 +32,16 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
 
         return resp
 
+    def dame_params_from_request(self, request, params):
+        # Aqui añadimos parametros que queramos sacar de request como files 
+        # O parametros de HEADER tipo HTTP_KEY, HTTP_SOURCE, CONTENT_TYPE, REMOTE_ADDR, etc ...
+        try:
+            if request.FILES:
+                params["FILES"] = request.FILES
+        except Exception as e:
+            pass
+        return params
+
     def ejecutaraccioncontrolador(self, request, modulo, accion=None, pk=None):
         current_user = request.user
         username = request.user.username
@@ -40,7 +50,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         print("ejecutaraccioncontrolador!!", str(modulo), str(accion), str(pk))
         
         params = None
-        if request._method == "POST":
+        if request.method == "POST":
             try:
                 if pk is not None:
                     params = {}
