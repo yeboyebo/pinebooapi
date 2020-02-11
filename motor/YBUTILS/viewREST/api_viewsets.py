@@ -16,6 +16,15 @@ from django.db import transaction
 from YBUTILS.viewREST import filtersPagination
 from YBUTILS.APIQSA import APIQSA
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 class YBControllerViewSet(viewsets.ViewSet, APIView):
     # permission_classes = (IsAuthenticated,)
@@ -71,7 +80,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
 
         try:
             if request.method == "GET":
-                print("llamando GET")
+                print(bcolors.OKBLUE + "llamando GET" + bcolors.ENDC)
                 obj = APIQSA.entry_point('get', modulo, username, params, accion)
                 result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
                 # action = getattr(controller, "start", None)
@@ -91,7 +100,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             return result
 
         except Exception as e:
-            print('Excepcion ', str(e))
+            print(bcolors.FAIL + "Excepcion " + str(e) + bcolors.ENDC)
 
             ex_type, ex_value, ex_traceback = sys.exc_info()
 
@@ -104,9 +113,11 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             for trace in trace_back:
                 stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
 
+            print(bcolors.WARNING)
             print("Exception type : %s " % ex_type.__name__)
             print("Exception message : %s" %ex_value)
             print("Stack trace : %s" %"\n".join(stack_trace))
+            print(bcolors.ENDC)
 
             resp = HttpResponseServerError(str(e))
             resp['Access-Control-Allow-Origin'] = '*'
