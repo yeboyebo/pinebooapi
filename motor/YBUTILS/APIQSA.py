@@ -1,18 +1,71 @@
+import sys
+import traceback
 try:
     from pineboolib.qsa import qsa
     from pineboolib import application
 except:
     pass
 
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
 class APIQSA:
 
     def entry_point(metodoHTTP, modulo, username, params=None, accion=None):
-        print("ejecutar controlador api")
-        # obj = qsa.from_project("formAPI").hola()
-        obj = qsa.from_project("formAPI").entry_point(metodoHTTP, modulo, username, params, accion)
+        try:
+            obj = qsa.from_project("formAPI").entry_point(metodoHTTP, modulo, username, params, accion)
+        except Exception as e:
+            print(bcolors.FAIL + "Excepcion " + str(e) + bcolors.ENDC)
+
+            ex_type, ex_value, ex_traceback = sys.exc_info()
+
+            # Extract unformatter stack traces as tuples
+            trace_back = traceback.extract_tb(ex_traceback)
+
+            # Format stacktrace
+            stack_trace = list()
+
+            for trace in trace_back:
+                stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
+
+            print(bcolors.WARNING)
+            print("Exception type : %s " % ex_type.__name__)
+            print("Exception message : %s" %ex_value)
+            print("Stack trace : %s" %"\n".join(stack_trace))
+            print(bcolors.ENDC)
+            raise Exception(e)
         return obj
 
     def login(username, password):
-        # obj = qsa.from_project("formAPI").hola()
-        obj = qsa.from_project("formAPI").login(username, password)
+        try:
+            obj = qsa.from_project("formAPI").login(username, password)
+        except Exception as e:
+            print(bcolors.FAIL + "Excepcion " + str(e) + bcolors.ENDC)
+
+            ex_type, ex_value, ex_traceback = sys.exc_info()
+
+            # Extract unformatter stack traces as tuples
+            trace_back = traceback.extract_tb(ex_traceback)
+
+            # Format stacktrace
+            stack_trace = list()
+
+            for trace in trace_back:
+                stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
+
+            print(bcolors.WARNING)
+            print("Exception type : %s " % ex_type.__name__)
+            print("Exception message : %s" %ex_value)
+            print("Stack trace : %s" %"\n".join(stack_trace))
+            print(bcolors.ENDC)
+            raise Exception(e)
         return obj
