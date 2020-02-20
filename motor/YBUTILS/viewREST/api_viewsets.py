@@ -1,4 +1,6 @@
 import json
+import sys
+import traceback
 
 from rest_framework import viewsets
 from rest_framework.views import APIView
@@ -57,9 +59,10 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
 
         print("USER: " + str(username))
         print("ejecutaraccioncontrolador!!", str(modulo), str(accion), str(pk))
+        print(bcolors.OKBLUE + "METHOD: " + request.method + bcolors.ENDC)
 
         params = None
-        if request.method == "POST":
+        if request.method in ["POST", "DELETE", "PUT"]:
             try:
                 if pk is not None:
                     params = {}
@@ -80,7 +83,6 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
 
         try:
             if request.method == "GET":
-                print(bcolors.OKBLUE + "llamando GET" + bcolors.ENDC)
                 obj = APIQSA.entry_point('get', modulo, username, params, accion)
                 result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
                 # action = getattr(controller, "start", None)
@@ -100,6 +102,24 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             return result
 
         except Exception as e:
+            print(bcolors.FAIL + "Excepcion " + str(e) + bcolors.ENDC)
+
+            ex_type, ex_value, ex_traceback = sys.exc_info()
+
+            # Extract unformatter stack traces as tuples
+            trace_back = traceback.extract_tb(ex_traceback)
+
+            # Format stacktrace
+            stack_trace = list()
+
+            for trace in trace_back:
+                stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
+
+            print(bcolors.WARNING)
+            print("Exception type : %s " % ex_type.__name__)
+            print("Exception message : %s" % ex_value)
+            print("Stack trace : %s" % "\n".join(stack_trace))
+            print(bcolors.ENDC)
             resp = HttpResponseServerError(str(e))
             resp['Access-Control-Allow-Origin'] = '*'
             return resp
