@@ -19,4 +19,8 @@ DATABASES = {
 }
 
 StaticLoader = True
-dirs = [True, "/pineboo/modules/fun/ruta/scripts",]
+dirs = []
+if os.environ.get('STATIC_LOADER_DIRS') != '':
+    for pdir in os.environ.get('STATIC_LOADER_DIRS').split(','):
+        dirs.append(True)
+        dirs.append(pdir)

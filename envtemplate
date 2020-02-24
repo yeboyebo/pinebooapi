@@ -1,0 +1,10 @@
+PORT=8000
+DBHOST=**ipbbdd**
+DOCKER_IP=55
+DBNAME=**__dbname__**
+DBUSER=**__dbuser__**
+DBPASSWORD=**__dbpassword__**
+DBPOST=**__dbport__**
+PINEBOODIR=**/ruta/pineboo**
+MODULESDIR=**/ruta/modules**
+STATIC_LOADER_DIRS=**dirs**
