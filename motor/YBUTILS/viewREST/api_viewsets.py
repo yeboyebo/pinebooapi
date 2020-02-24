@@ -115,11 +115,15 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             for trace in trace_back:
                 stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
 
-            print(bcolors.WARNING)
             print("Exception type : %s " % ex_type.__name__)
-            print("Exception message : %s" % ex_value)
-            print("Stack trace : %s" % "\n".join(stack_trace))
-            print(bcolors.ENDC)
+            print("Exception message : %s" %ex_value)
+            print("Stack trace : \n")
+            for index, l in enumerate(stack_trace):
+                if index < len(stack_trace) - 1:
+                    print(l)
+                else:
+                    print(bcolors.WARNING + l + bcolors.ENDC)
+
             resp = HttpResponseServerError(str(e))
             resp['Access-Control-Allow-Origin'] = '*'
             return resp
