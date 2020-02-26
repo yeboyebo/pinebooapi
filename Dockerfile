@@ -11,6 +11,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN mkdir /pineboo/
 RUN mkdir /src/
+RUN mkdir /src/app/
+RUN mkdir /src/app/logs
 WORKDIR /src/
 ADD requirements.txt /src/
 RUN pip3 install --upgrade pip
