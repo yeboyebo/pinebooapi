@@ -15,14 +15,20 @@ application = get_wsgi_application()
 
 
 from .local import *
+from YBUTILS.DbRouter import get_current_user
 from pineboolib.loader.projectconfig import ProjectConfig
 from pineboolib.core.settings import config
 from pineboolib.loader import main
 from pineboolib.application.parsers import qsaparser
 from pineboolib import application as pineboolib_app
-
 qsaparser.USE_THREADS = False
 
+
+def nombre_session():
+    return get_current_user()
+
+
+pineboolib_app.PROJECT.set_session_function(nombre_session)
 
 SQL_CONN = ProjectConfig(database=DATABASES["default"]["NAME"], host=DATABASES["default"]["HOST"], port=DATABASES["default"]["PORT"], type="PostgreSQL (PSYCOPG2)", username=DATABASES["default"]["USER"], password=DATABASES["default"]["PASSWORD"])
 if StaticLoader:
