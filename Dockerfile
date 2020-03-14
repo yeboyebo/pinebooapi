@@ -17,6 +17,6 @@ WORKDIR /src/
 ADD requirements.txt /src/
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
-RUN pip3 install -i https://test.pypi.org/simple/ pineboo==0.68.33
+RUN pip3 install -i https://test.pypi.org/simple/ pineboo==0.68.64
 
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo
