@@ -24,3 +24,6 @@ if os.environ.get('STATIC_LOADER_DIRS') != '':
     for pdir in os.environ.get('STATIC_LOADER_DIRS').split(','):
         dirs.append(True)
         dirs.append(pdir)
+
+temp_dir = os.environ.get('TEMPDIR')
+

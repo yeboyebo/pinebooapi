@@ -11,10 +11,12 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN mkdir /pineboo/
 RUN mkdir /src/
+RUN mkdir /src/app/
+RUN mkdir /src/app/logs
 WORKDIR /src/
 ADD requirements.txt /src/
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
-RUN pip3 install -i https://test.pypi.org/simple/ pineboo
+RUN pip3 install -i https://test.pypi.org/simple/ pineboo==0.68.33
 
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo
