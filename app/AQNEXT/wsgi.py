@@ -43,7 +43,7 @@ CONFIG.set_value("ebcomportamiento/parseProject", True)
 
 print("temp_dir" + temp_dir)
 if temp_dir:
-    config.set_value("ebcomportamiento/temp_dir", temp_dir)
+    CONFIG.set_value("ebcomportamiento/temp_dir", temp_dir)
 
 main.startup_framework(SQL_CONN)
 pineboolib_app.SHOW_CURSOR_EVENTS = False
