@@ -10,13 +10,13 @@ class apiRouter(SimpleRouter):
     routes = [
         Route(
             url=r'(?P<modulo>\w+)/(?P<pk>\w+)/(?P<accion>\w+)',
-            mapping={'get': 'ejecutaraccioncontrolador', 'post': 'ejecutaraccioncontrolador', 'options': 'optionsFun'},
+            mapping={'get': 'ejecutaraccioncontrolador', 'post': 'ejecutaraccioncontrolador', 'put': 'ejecutaraccioncontrolador', 'patch': 'ejecutaraccioncontrolador', 'delete': 'ejecutaraccioncontrolador', 'options': 'optionsFun'},
             name='{basename}-accion-REST',
             initkwargs={}, detail=True
         ),
         Route(
             url=r'(?P<modulo>\w+)/accion/(?P<accion>\w+)$',
-            mapping={'get': 'ejecutaraccioncontrolador', 'post': 'ejecutaraccioncontrolador', 'options': 'optionsFun'},
+            mapping={'get': 'ejecutaraccioncontrolador', 'post': 'ejecutaraccioncontrolador', 'put': 'ejecutaraccioncontrolador', 'patch': 'ejecutaraccioncontrolador', 'delete': 'ejecutaraccioncontrolador', 'options': 'optionsFun'},
             name='{basename}-accion-REST',
             initkwargs={}, detail=True
         ),
