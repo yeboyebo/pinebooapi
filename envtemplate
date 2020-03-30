@@ -1,4 +1,5 @@
 PORT=8000
+# WEBHOST=(ip) # Usar dolo cuando no sea localhost
 DBHOST=**ipbbdd**
 DOCKER_IP=55
 DBNAME=**__dbname__**
