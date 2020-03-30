@@ -39,9 +39,9 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             print("pasa")
             try:
                 params = {}
-                print(request.body)
+                # print(request.body)
                 params["data"] = json.loads(request.body.decode("utf-8"))
-                print("por")
+                # print("por")
 
             except Exception as e:
                 print(e)

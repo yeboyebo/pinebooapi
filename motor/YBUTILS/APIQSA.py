@@ -28,6 +28,7 @@ class APIQSA:
 
     def entry_point(metodoHTTP, modulo, username, params=None, accion=None):
         obj = qsa.from_project("formAPI").entry_point(metodoHTTP, modulo, username, params, accion)
+        print()
         return obj
 
     def login(username, password):
