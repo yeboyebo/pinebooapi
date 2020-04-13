@@ -15,7 +15,7 @@ class apiRouter(SimpleRouter):
             initkwargs={}, detail=True
         ),
         Route(
-            url=r'(?P<modulo>\w+)/accion/(?P<accion>\w+)$',
+            url=r'(?P<modulo>\w+)/-static-/(?P<accion>\w+)$',
             mapping={'get': 'ejecutaraccioncontrolador', 'post': 'ejecutaraccioncontrolador', 'put': 'ejecutaraccioncontrolador', 'patch': 'ejecutaraccioncontrolador', 'delete': 'ejecutaraccioncontrolador', 'options': 'optionsFun'},
             name='{basename}-accion-REST',
             initkwargs={}, detail=True

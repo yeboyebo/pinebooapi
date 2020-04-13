@@ -4,7 +4,7 @@ alabaster==0.7.12
 amqp==1.4.9
 anyjson==0.3.3
 appdirs==1.4.3
-asgi-rabbitmq==0.5.5
+#asgi-rabbitmq==0.5.5
 asgi-redis==1.4.3
 asgiref==3.2.0
 astroid==2.3.3
@@ -70,6 +70,7 @@ kombu==3.0.37
 lazy-object-proxy==1.4.3
 lxml==4.2.1
 MarkupSafe==1.1.1
+marshmallow
 mccabe==0.6.1
 more-itertools==8.0.2
 msgpack==0.6.2

@@ -34,11 +34,12 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         super().__init__(*args, **kwargs)
 
     def optionsFun(self, request, modulo, controlador=None, accion=None, pk=None):
+        print("optionsFun")
         resp = HttpResponse("{}", status=200, content_type="application/json")
         resp["Access-Control-Allow-Origin"] = "*"
-        resp["Access-Control-Allow-Headers"] = "Authorization"
+        resp["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
         resp["Access-Control-Allow-Credentials"] = True
-        resp["Access-Control-Allow-Methods"] = "GET,POST"
+        resp["Access-Control-Allow-Methods"] = "GET,POST,PATCH"
 
         return resp
 
@@ -60,39 +61,31 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         print("USER: " + str(username))
         print("ejecutaraccioncontrolador!!", str(modulo), str(accion), str(pk))
         print(bcolors.OKBLUE + "METHOD: " + request.method + bcolors.ENDC)
+        method = request.method.lower()
 
-        params = None
-        if request.method in ["POST", "DELETE", "PUT"]:
+        params = {}
+        if pk:
+            params["pk"] = pk
+        if method == "get":
+            data = filtersPagination._generaGetParam(request.query_params)
+            if data:
+                params["data"] = data
+        else:
             try:
-                if pk is not None:
-                    params = {}
-                    params['pk'] = pk
-                    params['data'] = json.loads(request.body.decode("utf-8"))
-                else:
-                    params = json.loads(request.body.decode("utf-8"))
-
-            except Exception:
-                params = {}
-                params['pk'] = pk
-                params['data'] = filtersPagination._generaPostParam(request._data)["POST"]
-
-        elif request.method == "GET":
-            params = filtersPagination._generaGetParam(request.query_params)
+                params['data'] = json.loads(request.body.decode("utf-8"))
+            except json.decoder.JSONDecodeError:
+                params['data'] = str(request.body.decode("utf-8"))
 
         params = self.dame_params_from_request(request, params)
 
         try:
-            if request.method == "GET":
-                obj = APIQSA.entry_point('get', modulo, username, params, accion)
+            if method == "get":
+                obj = APIQSA.entry_point(method, modulo, username, params, accion)
                 result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
-                # action = getattr(controller, "start", None)
-                # result = action(pk, params, username)
 
             else:
-                # action = getattr(controller, accion, None)
                 with transaction.atomic():
-                    # result = action(pk, params, username)
-                    obj = APIQSA.entry_point('post', modulo, username, params, accion)
+                    obj = APIQSA.entry_point(method, modulo, username, params, accion)
                     result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
 
             if not isinstance(result, (Response, HttpResponse)):
