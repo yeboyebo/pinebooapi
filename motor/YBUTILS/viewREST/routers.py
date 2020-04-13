@@ -4,10 +4,17 @@ from rest_framework.routers import SimpleRouter
 from YBUTILS.viewREST import api_viewsets
 from YBUTILS.viewREST import helpers
 
+
 class apiRouter(SimpleRouter):
     """Router para API"""
 
     routes = [
+        Route(
+            url=r'^useracl$',
+            mapping={'get': 'dameuseracl', 'post': 'dameuseracl', 'options': 'optionsFun'},
+            name='{basename}-accion-REST',
+            initkwargs={}, detail=True
+        ),
         Route(
             url=r'(?P<modulo>\w+)/(?P<pk>\w+)/(?P<accion>\w+)',
             mapping={'get': 'ejecutaraccioncontrolador', 'post': 'ejecutaraccioncontrolador', 'put': 'ejecutaraccioncontrolador', 'patch': 'ejecutaraccioncontrolador', 'delete': 'ejecutaraccioncontrolador', 'options': 'optionsFun'},

@@ -9,10 +9,10 @@ from YBLOGIN import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('login', views.auth_login, name='authentication'),
-    path('login/', views.auth_login, name='authentication'),
-    path('signup', views.signup_request, name='signup'),
-    path('account/', views.account_request, name='account'),
+    path('login', views.login, name='authentication'),
+    path('login/', views.login, name='authentication'),
+    # path('signup', views.signup_request, name='signup'),
+    # path('account/', views.account_request, name='account'),
     path('logout', logout, name='logout'),
     path('getToken', views.token_auth, name='getToken'),
 ]

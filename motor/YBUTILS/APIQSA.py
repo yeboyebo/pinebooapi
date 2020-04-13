@@ -20,8 +20,15 @@ class bcolors:
 
 class APIQSA:
 
+    def getuseracl(metodoHTTP, params, username):
+        model = params["data"]["model"] if "model" in params["data"] else None
+        method = params["data"]["method"] if "method" in params["data"] else None
+        obj = qsa.from_project("formAPI").user_is_allowed(metodoHTTP, username, model, method)
+        return obj
+
     def entry_point(metodoHTTP, modulo, username, params=None, accion=None):
         obj = qsa.from_project("formAPI").entry_point(metodoHTTP, modulo, username, params, accion)
+        print()
         return obj
 
     def login(username, password):

@@ -20,10 +20,10 @@ def index(request):
     error = ''
     return render(request, 'login/index.html', {'error': error})
 
-def login(request, error=None):
-    if not error:
-        error = ''
-    return render(request, 'login/login.html', {'error': error})
+# def login(request, error=None):
+#     if not error:
+#         error = ''
+#     return render(request, 'login/login.html', {'error': error})
 
 
 def signup(request, error):
@@ -127,7 +127,11 @@ def token_auth(request):
 
     # Comprobamos usuario con pineboo
     try:
-        authusername = APIQSA.login(username, password)
+        apiuser = APIQSA.login(username, password)
+        if type(apiuser) is int or type(apiuser) is str:
+            authusername = apiuser
+        else:
+            authusername = apiuser["user"]
         if authusername:
             user = User.objects.filter(username=str(authusername))
             if user.exists():
@@ -151,3 +155,48 @@ def token_auth(request):
     resul['Access-Control-Allow-Origin'] = '*'
     return resul
 
+@csrf_exempt
+def login(request):
+    try:
+        params = json.loads(request.body.decode("utf-8"))
+        username = params["username"]
+        password = params["password"]
+
+    except Exception:
+        username = request.POST.get("username", None)
+        password = request.POST.get("password", None)
+
+    # Comprobamos usuario con pineboo
+    try:
+        apiuser = APIQSA.login(username, password)
+        responseUser = {}
+        if type(apiuser) is int or type(apiuser) is str:
+            authusername = apiuser
+            responseUser["user"] = apiuser
+        else:
+            authusername = apiuser["user"]
+            responseUser = apiuser
+        if authusername:
+            user = User.objects.filter(username=str(authusername))
+            if user.exists():
+                authuser = authenticate(username=str(authusername), password=password)
+                if authuser is None:
+                    user = User.objects.get(username__exact=str(authusername))
+                    user.set_password(password)
+                    user.save()
+                    authuser = authenticate(username=str(authusername), password=password)
+            else:
+                user = User.objects.create_user(username=str(authusername), password=password)
+                user.is_staff = False
+                user.save()
+                authuser = authenticate(username=str(authusername), password=password)
+            token, _ = Token.objects.get_or_create(user=authuser)
+            print(responseUser)
+            responseUser["token"] = token.key
+            resul = HttpResponse(json.dumps(responseUser), status=200)
+    except Exception as e:
+        print("-----------------------")
+        print(e)
+        resul = HttpResponse(json.dumps({'error': str(e)}), status=404)
+    resul['Access-Control-Allow-Origin'] = '*'
+    return resul
