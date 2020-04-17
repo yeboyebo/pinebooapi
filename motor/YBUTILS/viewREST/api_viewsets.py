@@ -123,12 +123,12 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         if method == "get":
             data = filtersPagination._generaGetParam(request.query_params)
             if data:
-                params["data"] = data
+                params["params"] = data
         else:
             try:
-                params['data'] = json.loads(request.body.decode("utf-8"))
+                params["params"] = json.loads(request.body.decode("utf-8"))
             except json.decoder.JSONDecodeError:
-                params['data'] = str(request.body.decode("utf-8"))
+                params["params"] = str(request.body.decode("utf-8"))
 
         params = self.dame_params_from_request(request, params)
 
