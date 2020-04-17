@@ -132,6 +132,9 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
 
         params = self.dame_params_from_request(request, params)
 
+        if "data" in params and not params["data"]:
+            del(params["data"])
+
         try:
             if method == "get":
                 obj = APIQSA.entry_point(method, modulo, username, params, accion)
