@@ -89,6 +89,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             return resp
 
     def optionsFun(self, request, modulo=None, controlador=None, accion=None, pk=None):
+        print(request.body)
         resp = HttpResponse("{}", status=200, content_type="application/json")
         resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
@@ -116,7 +117,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         print("ejecutaraccioncontrolador!!", str(modulo), str(accion), str(pk))
         print(bcolors.OKBLUE + "METHOD: " + request.method + bcolors.ENDC)
         method = request.method.lower()
-
+        # print(request.__dict__)
         params = {}
         if pk:
             params["pk"] = pk
@@ -125,13 +126,17 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             if data:
                 params["params"] = data
         else:
-            try:
-                params["params"] = json.loads(request.body.decode("utf-8"))
-            except json.decoder.JSONDecodeError:
-                params["params"] = str(request.body.decode("utf-8"))
+            if "CONTENT_TYPE" in request.META:
+                if request.META["CONTENT_TYPE"].startswith("multipart/form-data"):
+                    params["params"] = request.POST
+            else:
+                try:
+                    params["params"] = json.loads(request.body.decode("utf-8"))
+                except Exception as e:
+                    print(e)
+                    params["params"] = str(request.body.decode("utf-8"))
 
         params = self.dame_params_from_request(request, params)
-
         if "data" in params and not params["data"]:
             del(params["data"])
 
