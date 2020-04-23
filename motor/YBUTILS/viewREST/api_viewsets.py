@@ -127,19 +127,18 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
                 params["params"] = data
         else:
             if "CONTENT_TYPE" in request.META:
+                params["params"] = {}
                 if request.META["CONTENT_TYPE"].startswith("multipart/form-data"):
                     params["params"] = request.POST
             else:
                 try:
                     params["params"] = json.loads(request.body.decode("utf-8"))
                 except Exception as e:
-                    print(e)
                     params["params"] = str(request.body.decode("utf-8"))
 
         params = self.dame_params_from_request(request, params)
         if "data" in params and not params["data"]:
             del(params["data"])
-
         try:
             if method == "get":
                 obj = APIQSA.entry_point(method, modulo, username, params, accion)
