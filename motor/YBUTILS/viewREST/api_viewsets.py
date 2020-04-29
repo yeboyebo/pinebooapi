@@ -126,10 +126,8 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             if data:
                 params["params"] = data
         else:
-            if "CONTENT_TYPE" in request.META:
-                params["params"] = {}
-                if request.META["CONTENT_TYPE"].startswith("multipart/form-data"):
-                    params["params"] = request.POST
+            if "CONTENT_TYPE" in request.META and request.META["CONTENT_TYPE"].startswith("multipart/form-data"):
+                params["params"] = request.POST
             else:
                 try:
                     params["params"] = json.loads(request.body.decode("utf-8"))
@@ -139,6 +137,8 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         params = self.dame_params_from_request(request, params)
         if "data" in params and not params["data"]:
             del(params["data"])
+        elif "params" in params and not params["params"]:
+            del(params["params"])
         try:
             if method == "get":
                 obj = APIQSA.entry_point(method, modulo, username, params, accion)
@@ -147,7 +147,8 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             else:
                 with transaction.atomic():
                     obj = APIQSA.entry_point(method, modulo, username, params, accion)
-                    result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
+                    # result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
+                    result = self.get_response(obj)
 
             if not isinstance(result, (Response, HttpResponse)):
                 raise Exception('La respuesta no es Response o HttpResponse')
@@ -181,3 +182,22 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             resp = HttpResponseServerError(str(e))
             resp['Access-Control-Allow-Origin'] = '*'
             return resp
+
+    def get_response(self, obj):
+        if type(obj) != bool and "attachments" in obj:
+            fichero = obj["attachments"][0]
+            decode = fichero["fichero"]
+            # print(decode)
+            filename = str(fichero["nombre"].encode('utf8'))
+            filename = filename[2:len(filename)-1]
+            # filename = fichero["nombre"]
+            disposition = "attachment"
+            # response = HttpResponse(content_type='image/png')
+            response = HttpResponse()
+            response['Content-Disposition'] = '{disposition}; filename="{filename}"'.format(disposition=disposition, filename=filename)
+            response.write(decode)
+            del(obj["attachments"])
+        else:
+            response = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
+
+        return response
