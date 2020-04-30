@@ -184,7 +184,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             return resp
 
     def get_response(self, obj):
-        if type(obj) != bool and "attachments" in obj:
+        if type(obj) == dict and "attachments" in obj:
             fichero = obj["attachments"][0]
             decode = fichero["fichero"]
             # print(decode)
