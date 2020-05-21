@@ -107,9 +107,9 @@ pylint==2.4.4
 pylint-json2html==0.1.0
 pyOpenSSL==19.1.0
 pyparsing==2.2.0
-PyQt5==5.13.0
-PyQt5-sip==4.19.19
-PyQt5-stubs==5.13.1.3
+PyQt5==5.14.2
+PyQt5-sip==12.7.2
+PyQt5-stubs==5.14.2
 PyReact==0.5.2
 pyroma==2.6
 pytest==5.3.1
@@ -132,7 +132,7 @@ service-identity==18.1.0
 six==1.10.0
 smmap2==2.0.3
 snowballstemmer==2.0.0
-SQLAlchemy==1.3.9
+SQLAlchemy==1.3.16
 sqlparse==0.3.0
 stevedore==1.31.0
 testresources==2.0.1
