@@ -15,12 +15,14 @@ application = get_wsgi_application()
 
 
 from .local import *
+from pineboolib import application as pineboolib_app
 from YBUTILS.DbRouter import get_current_user
 from pineboolib.loader.projectconfig import ProjectConfig
 from pineboolib.core.settings import CONFIG
 from pineboolib.loader import main
+#from pineboolib.application.parsers import parser_qsa as qsaparser
 from pineboolib.application.parsers import qsaparser
-from pineboolib import application as pineboolib_app
+from pineboolib.application.utils import path
 qsaparser.USE_THREADS = False
 
 
@@ -40,11 +42,11 @@ else:
     CONFIG.set_value("StaticLoader/%s/enabled" % (DATABASES["default"]["NAME"]), False)
 
 CONFIG.set_value("ebcomportamiento/parseProject", True)
-
-print("temp_dir" + temp_dir)
+# print("temp_dir" + temp_dir)
 if temp_dir:
-    CONFIG.set_value("ebcomportamiento/temp_dir", temp_dir)
+    pineboolib_app.PROJECT.tmpdir = temp_dir
 
 main.startup_framework(SQL_CONN)
+pineboolib_app.PROJECT.no_python_cache = False
 pineboolib_app.SHOW_CURSOR_EVENTS = False
 pineboolib_app.PROJECT.conn_manager.set_max_connections_limit(1000)
