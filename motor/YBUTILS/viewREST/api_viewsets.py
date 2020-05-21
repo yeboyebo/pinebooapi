@@ -94,7 +94,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
         resp["Access-Control-Allow-Credentials"] = True
-        resp["Access-Control-Allow-Methods"] = "GET,POST,PATCH"
+        resp["Access-Control-Allow-Methods"] = "GET,POST,PATCH,DELETE"
 
         return resp
 
@@ -145,10 +145,8 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
                 result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
 
             else:
-                with transaction.atomic():
-                    obj = APIQSA.entry_point(method, modulo, username, params, accion)
-                    # result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
-                    result = self.get_response(obj)
+                obj = APIQSA.entry_point(method, modulo, username, params, accion)
+                result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
 
             if not isinstance(result, (Response, HttpResponse)):
                 raise Exception('La respuesta no es Response o HttpResponse')
