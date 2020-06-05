@@ -142,7 +142,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         try:
             if method == "get":
                 obj = APIQSA.entry_point(method, modulo, username, params, accion)
-                result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
+                result = HttpResponse(json.dumps(obj, default=str), status=200, content_type='application/json')
 
             else:
                 obj = APIQSA.entry_point(method, modulo, username, params, accion)

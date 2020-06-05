@@ -20,8 +20,8 @@ from YBUTILS.DbRouter import get_current_user
 from pineboolib.loader.projectconfig import ProjectConfig
 from pineboolib.core.settings import CONFIG
 from pineboolib.loader import main
-#from pineboolib.application.parsers import parser_qsa as qsaparser
-from pineboolib.application.parsers import qsaparser
+from pineboolib.application.parsers import parser_qsa as qsaparser
+#from pineboolib.application.parsers import qsaparser
 from pineboolib.application.utils import path
 qsaparser.USE_THREADS = False
 
