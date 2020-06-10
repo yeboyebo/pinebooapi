@@ -1,6 +1,7 @@
 from os import path
 import sys
-WSGI_APPLICATION = 'AQNEXT.wsgi.application'
+# WSGI_APPLICATION = 'AQNEXT.wsgi.application'
+ASGI_APPLICATION = "AQNEXT.routing.application"
 PROJECT_ROOT = path.dirname(path.abspath(path.dirname(__file__)))
 
 sys.path.insert(0, path.join(PROJECT_ROOT, "../motor/"))

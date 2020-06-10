@@ -13,3 +13,4 @@ print("______________________________________")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "AQNEXT.settings")
 django.setup()
 application = get_default_application()
+# channel_layer = channels.asgi.get_channel_layer

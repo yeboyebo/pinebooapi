@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'YBWEB',
     'YBLOGIN',
     'rest_framework.authtoken',
+    'channels',
 )
 
 # MIDDLEWARE_CLASSES = (
@@ -91,7 +92,7 @@ ROOT_URLCONF = 'YBAQNEXT.urls'
 IS_SVN = False
 TITLE = "AQNext"
 
-ASGI_APPLICATION = "AQNEXT.asgi.application"
+# ASGI_APPLICATION = "AQNEXT.asgi.application"
 # WSGI_APPLICATION = 'AQNEXT.wsgi.application'
 
 # Database
