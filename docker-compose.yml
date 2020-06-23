@@ -31,7 +31,8 @@ services:
       app_network:
 
   redis:
-    image: redis:latest        
+    image: redis:latest
+    restart: always        
     ports:
       - '6379:6379'
 

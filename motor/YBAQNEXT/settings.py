@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'YBWEB',
     'YBLOGIN',
     'rest_framework.authtoken',
-    'channels',
+    # 'channels',
 )
 
 # MIDDLEWARE_CLASSES = (

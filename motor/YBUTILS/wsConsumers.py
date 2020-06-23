@@ -26,42 +26,37 @@ class ChatConsumer(WebsocketConsumer):
             'message': message
         }))
 
-class MyConsumer(JsonWebsocketConsumer):
+class JSONConsumer(JsonWebsocketConsumer):
 
     def connect(self):
-        print(self.scope["user"])
-        # self.room_name = self.scope['url_route']['kwargs']['room_name']
-        # self.room_group_name = 'chat_%s' % self.room_name
+        # print("_________________________")
+        # print(self.scope["user"])
+        # print(self.scope["token"])
+        self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.room_group_name = self.room_name
 
         # # Join room group
+        async_to_sync(self.channel_layer.group_add)(
+            self.room_group_name,
+            self.channel_name
+        )
+
         # async_to_sync(self.channel_layer.group_add)(
-        #     self.room_group_name,
+        #     "events",
         #     self.channel_name
         # )
 
-        # self.accept()
-        # try:
-        #     roomName = self.scope['url_route']['kwargs']['room_name']
-        # except Exception:
-        #     roomName = "events"
-        print(self.channel_name)
-        async_to_sync(self.channel_layer.group_add)(
-            "events",
-            self.channel_name
-        )
-        print("???????????")
         self.accept()
-        # async_to_sync(self.channel_layer.group_send)(
-        #     "events",
-        #     {
-        #         "type": "on.login",
-        #         "content": "conexion",
-        #      },
-        # )
+        # async_to_sync(self.channel_layer.send)(self.channel_name, {"type": "on.login", "content": "correcto"})
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+            {
+                "type": "on.login",
+                "content": "correcto",
+            }
+        )
 
     def disconnect(self, close_code):
-        print('inside EventConsumer disconnect()')
-        print("Closed websocket with code: ", close_code)
         async_to_sync(self.channel_layer.group_discard)(
             'events',
             self.channel_name
@@ -72,34 +67,70 @@ class MyConsumer(JsonWebsocketConsumer):
         async_to_sync(channel.group_send)(
             "events",
             {
-                "type": "on.login",
+                "type": "send.msg",
                 "content": "enviamosdesdeapi",
-             },
+            }
         )
 
     def receive_json(self, content, **kwargs):
-        print('inside EventConsumer receive_json()')
-        print("Received event: {}".format(content))
-        print("____________", self.channel_name)
-        # sec3.delay(content, self.channel_name)
-        # MyConsumer.envia(self, "events", "desdeap")
-        # obj = qsa.from_project("formAPI").entry_point("get", "articulos", "edulopez", {"params": {"filter":'["pvp","gt",1]'}}, "get")
-        # print(obj)
-        self.send_json(content)
+        # self.send_json(content)
+        # TODO groupSend, channelSend, api
+        if content["type"] == "legacy":
+            prefix = content["prefix"]
+            pk = content["pk"] if "pk" in content else "--static--"
+            params = content["params"] if "params" in content else {"params": None}
+            action = content["action"] if "action" in content else None
+            try:
+                obj = qsa.from_project("formAPI").entry_point("websocket", prefix, pk, params, action)
+                async_to_sync(self.channel_layer.group_send)(
+                    self.room_group_name,
+                    {
+                        "type": "send.msg",
+                        "content": obj,
+                    }
+                )
+            except Exception as e:
+                print(e)
+                self.send_json({"error": content})
+        elif content["type"] == "channelSend":
+            try:
+                obj = qsa.from_project("formAPI").entry_point("websocket", prefix, pk, params, action)
+                async_to_sync(self.channel_layer.group_send)(
+                    self.room_group_name,
+                    {
+                        "type": "send.msg",
+                        "content": obj,
+                    }
+                )
+            except Exception as e:
+                print(e)
+                self.send_json({"error": content})
+        elif content["type"] == "groupSend":
+            try:
+                obj = qsa.from_project("formAPI").entry_point("websocket", prefix, pk, params, action)
+                async_to_sync(self.channel_layer.group_send)(
+                    self.room_group_name,
+                    {
+                        "type": "send.msg",
+                        "content": obj,
+                    }
+                )
+            except Exception as e:
+                print(e)
+                self.send_json({"error": content})
+        # prifnt(content)
 
-    def on_alarm(self, event):
-        print('inside EventConsumer events_alarm()')
-        print(event)
+    def send_msg(self, event):
+        # TODO posibilidad de poner un from quien envio?
         self.send_json(
             {
-                'type': 'on.alarm',
+                'type': 'send.msg',
                 'content': event['content']
             }
         )
 
     def on_login(self, event):
-        print('inside EventConsumer events_login()')
-        print(event)
+        # TODO enviar al grupo quien conecto
         self.send_json(
             {
                 'type': 'on.login',

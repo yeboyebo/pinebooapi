@@ -19,6 +19,7 @@ DATABASES = {
     }
 }
 
+websocket = os.environ.get('WEBSOCKET') or False
 StaticLoader = True
 dirs = []
 dir_list = os.environ.get('STATIC_LOADER_DIRS')
@@ -29,18 +30,22 @@ if dir_list is not None and dir_list != '':
 
 temp_dir = os.environ.get('TEMPDIR')
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            'hosts': [('dbhost', 6379)],
+if websocket == "True":
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                'hosts': [('dbhost', 6379)],
+            },
         },
-    },
-}
+    }
 
-# Celery settings
-BROKER_URL = 'redis://dbhost:6379/0'  # our redis address
-# use json format for everything
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+    # Celery settings
+    BROKER_URL = 'redis://dbhost:6379/0'  # our redis address
+    # use json format for everything
+    CELERY_ACCEPT_CONTENT = ['json']
+    CELERY_TASK_SERIALIZER = 'json'
+    CELERY_RESULT_SERIALIZER = 'json'
+    ASGI_APPLICATION = "AQNEXT.routing.application"
+else:
+    WSGI_APPLICATION = 'AQNEXT.wsgi.application'

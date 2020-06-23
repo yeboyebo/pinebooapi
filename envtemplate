@@ -10,3 +10,4 @@ PINEBOODIR=**/home/*****/Pineboo/**
 MODULESDIR=**/ruta/modules**
 TEMPDIR=/pineboo/pineboo/tempdata
 STATIC_LOADER_DIRS=**dirs**
+WEBSOCKET=True
