@@ -31,7 +31,6 @@ class JSONConsumer(JsonWebsocketConsumer):
     def connect(self):
         # print("_________________________")
         # print(self.scope["user"])
-        # print(self.scope["token"])
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = self.room_name
 
@@ -75,13 +74,17 @@ class JSONConsumer(JsonWebsocketConsumer):
     def receive_json(self, content, **kwargs):
         # self.send_json(content)
         # TODO groupSend, channelSend, api
+        user = self.scope["user"]
+        print(content)
+        if "token" in self.scope:
+            userid = qsa.FLUtil.quickSqlSelect('authtoken_token', 'user_id', 'key = \'' + str(self.scope["token"]) + '\'')
+            user = qsa.FLUtil.quickSqlSelect('auth_user', 'username', 'id = \'' + str(userid) + '\'')
         if content["type"] == "legacy":
             prefix = content["prefix"]
-            pk = content["pk"] if "pk" in content else "--static--"
-            params = content["params"] if "params" in content else {"params": None}
+            params = content["params"] if "params" in content else {"params": {"pk": content["pk"]} if "pk" in content else False}
             action = content["action"] if "action" in content else None
             try:
-                obj = qsa.from_project("formAPI").entry_point("websocket", prefix, pk, params, action)
+                obj = qsa.from_project("formAPI").entry_point("websocket", prefix, user, params, action)
                 async_to_sync(self.channel_layer.group_send)(
                     self.room_group_name,
                     {
@@ -90,50 +93,56 @@ class JSONConsumer(JsonWebsocketConsumer):
                     }
                 )
             except Exception as e:
+                print("_______________________")
                 print(e)
                 self.send_json({"error": content})
-        elif content["type"] == "channelSend":
-            try:
-                obj = qsa.from_project("formAPI").entry_point("websocket", prefix, pk, params, action)
-                async_to_sync(self.channel_layer.group_send)(
-                    self.room_group_name,
-                    {
-                        "type": "send.msg",
-                        "content": obj,
-                    }
-                )
-            except Exception as e:
-                print(e)
-                self.send_json({"error": content})
-        elif content["type"] == "groupSend":
-            try:
-                obj = qsa.from_project("formAPI").entry_point("websocket", prefix, pk, params, action)
-                async_to_sync(self.channel_layer.group_send)(
-                    self.room_group_name,
-                    {
-                        "type": "send.msg",
-                        "content": obj,
-                    }
-                )
-            except Exception as e:
-                print(e)
-                self.send_json({"error": content})
-        # prifnt(content)
+        # elif content["type"] == "channelSend":
+        #     try:
+        #         async_to_sync(self.channel_layer.group_send)(
+        #             self.room_group_name,
+        #             {
+        #                 "type": "send.msg",
+        #                 "content": content,
+        #             }
+        #         )
+        #     except Exception as e:
+        #         print(e)
+        #         self.send_json({"error": content})
+        # elif content["type"] == "groupSend":
+        #     try:
+        #         async_to_sync(self.channel_layer.group_send)(
+        #             self.room_group_name,
+        #             {
+        #                 "type": "send.msg",
+        #                 "content": content,
+        #             }
+        #         )
+        #     except Exception as e:
+        #         print(e)
+        #         self.send_json({"error": content})
 
     def send_msg(self, event):
-        # TODO posibilidad de poner un from quien envio?
+        user = self.scope["user"]
+        if "token" in self.scope:
+            userid = qsa.FLUtil.quickSqlSelect('authtoken_token', 'user_id', 'key = \'' + str(self.scope["token"]) + '\'')
+            user = qsa.FLUtil.quickSqlSelect('auth_user', 'username', 'id = \'' + str(userid) + '\'')
         self.send_json(
             {
                 'type': 'send.msg',
-                'content': event['content']
+                'content': event['content'],
+                'username': str(user)
             }
         )
 
     def on_login(self, event):
-        # TODO enviar al grupo quien conecto
+        user = self.scope["user"]
+        if "token" in self.scope:
+            userid = qsa.FLUtil.quickSqlSelect('authtoken_token', 'user_id', 'key = \'' + str(self.scope["token"]) + '\'')
+            user = qsa.FLUtil.quickSqlSelect('auth_user', 'username', 'id = \'' + str(userid) + '\'')
         self.send_json(
             {
                 'type': 'on.login',
-                'content': event['content']
+                'content': event['content'],
+                'username': str(user)
             }
         )
