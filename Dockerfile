@@ -18,4 +18,4 @@ ADD requirements.txt /src/
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
 RUN pip3 install pineboo==0.72.14.7
-RUN adduser --quiet --disabled-password --gecos '' juanma && echo "juanma:juanma" | chpasswd && adduser juanma sudo
+RUN adduser --quiet --disabled-password --gecos '' yeboyebo && echo "yeboyebo:yeboyebo" | chpasswd && adduser yeboyebo sudo

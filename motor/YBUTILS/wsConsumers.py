@@ -46,12 +46,16 @@ class JSONConsumer(JsonWebsocketConsumer):
         # )
 
         self.accept()
-        # async_to_sync(self.channel_layer.send)(self.channel_name, {"type": "on.login", "content": "correcto"})
+        user = "Anonymous"
+        if "token" in self.scope:
+            userid = qsa.FLUtil.quickSqlSelect('authtoken_token', 'user_id', 'key = \'' + str(self.scope["token"]) + '\'')
+            user = qsa.FLUtil.quickSqlSelect('auth_user', 'username', 'id = \'' + str(userid) + '\'')
+        async_to_sync(self.channel_layer.send)(self.channel_name, {"type": "on.login", "content": "correcto"})
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 "type": "on.login",
-                "content": "correcto",
+                "content": str(user)
             }
         )
 
@@ -122,27 +126,22 @@ class JSONConsumer(JsonWebsocketConsumer):
         #         self.send_json({"error": content})
 
     def send_msg(self, event):
-        user = self.scope["user"]
-        if "token" in self.scope:
-            userid = qsa.FLUtil.quickSqlSelect('authtoken_token', 'user_id', 'key = \'' + str(self.scope["token"]) + '\'')
-            user = qsa.FLUtil.quickSqlSelect('auth_user', 'username', 'id = \'' + str(userid) + '\'')
+        # user = self.scope["user"]
+        # if "token" in self.scope:
+        #     userid = qsa.FLUtil.quickSqlSelect('authtoken_token', 'user_id', 'key = \'' + str(self.scope["token"]) + '\'')
+        #     user = qsa.FLUtil.quickSqlSelect('auth_user', 'username', 'id = \'' + str(userid) + '\'')
         self.send_json(
             {
-                'type': 'send.msg',
-                'content': event['content'],
-                'username': str(user)
+                'type': 'msg',
+                'content': event['content']
             }
         )
 
     def on_login(self, event):
-        user = self.scope["user"]
-        if "token" in self.scope:
-            userid = qsa.FLUtil.quickSqlSelect('authtoken_token', 'user_id', 'key = \'' + str(self.scope["token"]) + '\'')
-            user = qsa.FLUtil.quickSqlSelect('auth_user', 'username', 'id = \'' + str(userid) + '\'')
         self.send_json(
             {
-                'type': 'on.login',
-                'content': event['content'],
-                'username': str(user)
+                'type': 'login',
+                'content': 'correcto',
+                'username': event['content']
             }
         )

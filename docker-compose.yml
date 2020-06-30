@@ -4,7 +4,7 @@ services:
   django:
     image: django
     build: .
-    user: juanma
+    user: yeboyebo
     restart: always
     working_dir: /src/app/
     depends_on:
