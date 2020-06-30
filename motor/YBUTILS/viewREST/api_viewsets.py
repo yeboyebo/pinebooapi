@@ -146,7 +146,8 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
 
             else:
                 obj = APIQSA.entry_point(method, modulo, username, params, accion)
-                result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
+                # result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
+                result = self.get_response(obj)
 
             if not isinstance(result, (Response, HttpResponse)):
                 raise Exception('La respuesta no es Response o HttpResponse')
@@ -182,6 +183,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             return resp
 
     def get_response(self, obj):
+        print("entra?")
         if type(obj) == dict and "attachments" in obj:
             fichero = obj["attachments"][0]
             decode = fichero["fichero"]
