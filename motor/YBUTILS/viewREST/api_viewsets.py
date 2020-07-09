@@ -140,14 +140,20 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         elif "params" in params and not params["params"]:
             del(params["params"])
         try:
-            if method == "get":
-                obj = APIQSA.entry_point(method, modulo, username, params, accion)
-                result = HttpResponse(json.dumps(obj, default=str), status=200, content_type='application/json')
+            # if method == "get":
+            #     obj = APIQSA.entry_point(method, modulo, username, params, accion)
+            #     if isinstance(obj, (Response, HttpResponse)):
+            #         result = obj
+            #     else:
+            #         result = HttpResponse(json.dumps(obj, default=str), status=200, content_type='application/json')
 
-            else:
-                obj = APIQSA.entry_point(method, modulo, username, params, accion)
-                # result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
-                result = self.get_response(obj)
+            # else:
+            #     obj = APIQSA.entry_point(method, modulo, username, params, accion)
+            #     # result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
+            #     result = self.get_response(obj)
+            print(method, modulo, username, params, accion)
+            obj = APIQSA.entry_point(method, modulo, username, params, accion)
+            result = self.get_response(obj)
 
             if not isinstance(result, (Response, HttpResponse)):
                 raise Exception('La respuesta no es Response o HttpResponse')
@@ -184,12 +190,15 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
 
     def get_response(self, obj):
         print("entra?")
-        if type(obj) == dict and "attachments" in obj:
+        if isinstance(obj, (Response, HttpResponse)):
+            print("viene por aqui???")
+            return obj
+        elif type(obj) == dict and "attachments" in obj:
             fichero = obj["attachments"][0]
             decode = fichero["fichero"]
             # print(decode)
             filename = str(fichero["nombre"].encode('utf8'))
-            filename = filename[2:len(filename)-1]
+            filename = filename[2:len(filename) - 1]
             # filename = fichero["nombre"]
             disposition = "attachment"
             # response = HttpResponse(content_type='image/png')
