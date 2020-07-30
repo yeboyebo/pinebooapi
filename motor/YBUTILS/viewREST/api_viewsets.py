@@ -68,8 +68,6 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             ex_type, ex_value, ex_traceback = sys.exc_info()
 
             # Extract unformatter stack traces as tuples
-            print("**")
-            print(ex_traceback)
             trace_back = traceback.extract_tb(ex_traceback)
 
             # Format stacktrace
@@ -170,10 +168,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             ex_type, ex_value, ex_traceback = sys.exc_info()
 
             # Extract unformatter stack traces as tuples
-            print("***")
-            print(ex_traceback)
             trace_back = traceback.extract_tb(ex_traceback)
-            print(trace_back)
             # Format stacktrace
             stack_trace = list()
 
