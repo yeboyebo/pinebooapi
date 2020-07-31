@@ -156,7 +156,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             #     result = self.get_response(obj)
             print(method, modulo, username, params, accion)
             obj = APIQSA.entry_point(method, modulo, username, params, accion)
-            result = self.get_response(obj)
+            result = self.get_response(obj, method)
 
             if not isinstance(result, (Response, HttpResponse)):
                 raise Exception('La respuesta no es Response o HttpResponse')
@@ -196,7 +196,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             resp['Access-Control-Allow-Origin'] = '*'
             return resp
 
-    def get_response(self, obj):
+    def get_response(self, obj, method):
         print("entra?")
         if isinstance(obj, (Response, HttpResponse)):
             print("viene por aqui???")
@@ -215,6 +215,9 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             response.write(decode)
             del(obj["attachments"])
         else:
-            response = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
+            if method == "get":
+                response = HttpResponse(json.dumps(obj, default=str), status=200, content_type='application/json')
+            else:
+                response = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
 
         return response
