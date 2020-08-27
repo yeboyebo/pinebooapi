@@ -20,7 +20,7 @@ DATABASES = {
 }
 
 websocket = os.environ.get('WEBSOCKET') or False
-websocket = os.environ.get('USE_ATOMIC_LIST') or False
+USE_ATOMIC_LIST = os.environ.get('USE_ATOMIC_LIST') or False
 StaticLoader = True
 dirs = []
 dir_list = os.environ.get('STATIC_LOADER_DIRS')
