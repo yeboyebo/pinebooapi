@@ -25,6 +25,8 @@ if StaticLoader:
 else:
     CONFIG.set_value("StaticLoader/%s/enabled" % (DATABASES["default"]["NAME"]), False)
 
+pineboolib_app.SHOW_CLOSED_CONNECTION_WARNING = False
+pineboolib_app.USE_ATOMIC_LIST = USE_ATOMIC_LIST
 pineboolib_app.USE_WEBSOCKET_CHANNEL = True
 CONFIG.set_value("ebcomportamiento/parseProject", False)
 

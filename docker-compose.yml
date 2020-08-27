@@ -20,13 +20,16 @@ services:
       - ./.env
     ports:
       - "${PORT}:8000"
+      - "632:631"
     extra_hosts:
       - "dbhost:${DBHOST}"
     volumes:
       - .:/src
       - ${PINEBOODIR}:/pineboo/pineboo
       - ${MODULESDIR}:/pineboo/modules
-    command: python3 manage.py runserver 0.0.0.0:8000
+      - /run/cups/cups.sock:/run/cups/cups.sock
+      - /etc/cups/cupsd.conf:/etc/cups/cupsd.conf
+    command: python3 manage.py runserver 0.0.0.0:8000 --noreload
     networks:
       app_network:
 
