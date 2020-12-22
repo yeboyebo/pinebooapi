@@ -104,6 +104,7 @@ Pygments==2.5.2
 PyHamcrest==1.9.0
 pylint==2.4.4
 pylint-json2html==0.1.0
+pymssql==2.1.5
 pyOpenSSL==19.1.0
 pyparsing==2.2.0
 PyQt5==5.14.2
