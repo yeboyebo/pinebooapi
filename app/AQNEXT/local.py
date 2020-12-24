@@ -41,7 +41,7 @@ if websocket == "True":
         },
     }
 
-    # Celery settings
+    # Celery settings dbhost
     BROKER_URL = 'redis://dbhost:6379/0'  # our redis address
     # use json format for everything
     CELERY_ACCEPT_CONTENT = ['json']
