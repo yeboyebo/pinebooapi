@@ -15,7 +15,8 @@ RUN mkdir /src/app/
 RUN mkdir /src/app/logs
 WORKDIR /src/
 ADD requirements.txt /src/
-RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
-RUN pip3 install pineboo==0.77.3.1
+RUN /usr/local/bin/python -m pip install --upgrade pip
+RUN pip3 install --upgrade setuptools==51.0.0
+RUN pip3 install -r requirements.txt --use-deprecated=legacy-resolver
+RUN pip3 install pineboo==0.77.3.2
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo && echo "yeboyebo:yeboyebo" | chpasswd && adduser yeboyebo sudo
