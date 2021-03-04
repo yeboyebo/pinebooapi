@@ -17,5 +17,5 @@ WORKDIR /src/
 ADD requirements.txt /src/
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
-RUN pip3 install pineboo==0.75
+RUN pip3 install pineboo==0.77.10.1
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo && echo "yeboyebo:yeboyebo" | chpasswd && adduser yeboyebo sudo
