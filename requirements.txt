@@ -90,7 +90,7 @@ pkginfo==1.5.0.1
 pluggy==0.13.1
 ply==3.10
 psycopg2==2.8.3
-py==1.8.0
+py==1.10.0
 pyaes==1.6.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.7
