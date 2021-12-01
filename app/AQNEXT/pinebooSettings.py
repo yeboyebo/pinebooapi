@@ -1,3 +1,4 @@
+import os
 from .local import *
 from pineboolib import application as pineboolib_app
 from YBUTILS.DbRouter import get_current_user
@@ -32,6 +33,16 @@ CONFIG.set_value("ebcomportamiento/parseProject", False)
 
 if temp_dir:
     pineboolib_app.PROJECT.tmpdir = temp_dir
+
+pineboolib_app.PROJECT.conn_manager.REMOVE_CONNECTIONS_AFTER_ATOMIC = True
+# pineboolib_app.PROJECT.conn_manager.SAFE_TIME_SLEEP = 0.1
+# pineboolib_app.PROJECT.conn_manager.set_safe_mode(2)
+
+flfiles = os.environ.get('FLFILES_FOLDER')
+if flfiles:
+    pineboolib_app.PROJECT.USE_FLFILES_FOLDER=flfiles
+
+pineboolib_app.PROJECT.setDebugLevel(200)
 
 pineboolib_app.PROJECT.conn_manager.set_max_connections_limit(100)
 main.startup_framework(SQL_CONN)
