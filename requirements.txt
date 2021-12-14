@@ -123,7 +123,7 @@ PyYAML==5.2
 readme-renderer==24.0
 redis==2.10.6
 regex==2015.3.18
-reportlab==3.5.32
+reportlab==3.5.55
 requests==2.20.0
 requests-toolbelt==0.9.1
 scramp==1.1.0
