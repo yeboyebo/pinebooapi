@@ -159,7 +159,6 @@ def token_auth(request):
 def login(request):
     try:
         params = json.loads(request.body.decode("utf-8"))
-        print("PAEAMS API", params)
         username = params["username"]
         password = params["password"]
 
