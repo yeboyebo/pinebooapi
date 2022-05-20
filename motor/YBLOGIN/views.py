@@ -159,6 +159,7 @@ def token_auth(request):
 def login(request):
     try:
         params = json.loads(request.body.decode("utf-8"))
+        print("PAEAMS API", params)
         username = params["username"]
         password = params["password"]
 
@@ -168,7 +169,7 @@ def login(request):
 
     # Comprobamos usuario con pineboo
     try:
-        apiuser = APIQSA.login(username, password)
+        apiuser = APIQSA.login(username, password, params)
         responseUser = {}
         if type(apiuser) is int or type(apiuser) is str:
             authusername = apiuser
