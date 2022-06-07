@@ -168,7 +168,7 @@ def login(request):
 
     # Comprobamos usuario con pineboo
     try:
-        apiuser = APIQSA.login(username, password)
+        apiuser = APIQSA.login(username, password, params)
         responseUser = {}
         if type(apiuser) is int or type(apiuser) is str:
             authusername = apiuser

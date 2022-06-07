@@ -31,9 +31,9 @@ class APIQSA:
         print()
         return obj
 
-    def login(username, password):
+    def login(username, password, params=None):
         try:
-            obj = qsa.from_project("formAPI").login(username, password)
+            obj = qsa.from_project("formAPI").login(username, password, params)
         except Exception as e:
             print(bcolors.FAIL + "Excepcion " + str(e) + bcolors.ENDC)
 
