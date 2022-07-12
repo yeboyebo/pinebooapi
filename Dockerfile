@@ -1,10 +1,10 @@
-FROM python:3.6.10-buster
+FROM python:3.10.5-buster
 
 MAINTAINER Javier Cortés <javier@yeboyebo.es>
 
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update && apt-get install -y apt-utils build-essential python3-pip vim python3-pyqt5 tzdata libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev
+RUN apt-get update && apt-get install -y apt-utils build-essential python3-pip vim tzdata libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev freetds-dev libgl1 libegl1 libxkbcommon-x11-0
 
 ENV TZ=Europe/Madrid
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -16,7 +16,7 @@ RUN mkdir /src/app/logs
 WORKDIR /src/
 ADD requirements.txt /src/
 RUN /usr/local/bin/python -m pip install --upgrade pip
-RUN pip3 install --upgrade setuptools==51.0.0
+RUN pip3 install --upgrade setuptools==57.5.0
 RUN pip3 install -r requirements.txt --use-deprecated=legacy-resolver
-RUN pip3 install pineboo==0.77.37
+RUN pip3 install pineboo==0.99.30
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo && echo "yeboyebo:yeboyebo" | chpasswd && adduser yeboyebo sudo
