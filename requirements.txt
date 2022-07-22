@@ -64,7 +64,7 @@ openpyxl==2.6.0
 packaging==20.4
 pamqp==2.3.0
 pandas==1.1.5
-paramiko==2.7.2
+paramiko==2.10.1
 pathspec==0.6.0
 pbr==5.4.4
 pg8000==1.13.2
