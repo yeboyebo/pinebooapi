@@ -10,7 +10,7 @@ async-timeout==4.0.2
 attrs==19.3.0
 autobahn==17.6.2
 Automat==0.8.0
-Babel==2.5.3
+Babel==2.9.1
 bandit==1.6.2
 billiard==3.3.0.23
 bleach==3.1.0
