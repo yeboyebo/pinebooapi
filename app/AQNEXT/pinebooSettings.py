@@ -29,7 +29,9 @@ else:
 pineboolib_app.SHOW_CLOSED_CONNECTION_WARNING = False
 pineboolib_app.USE_ATOMIC_LIST = USE_ATOMIC_LIST
 pineboolib_app.USE_WEBSOCKET_CHANNEL = True
+
 CONFIG.set_value("ebcomportamiento/parseProject", False)
+CONFIG.set_value("application/callFunction", "CRON.init_cron")
 
 if temp_dir:
     pineboolib_app.PROJECT.tmpdir = temp_dir
@@ -37,6 +39,8 @@ if temp_dir:
 pineboolib_app.PROJECT.conn_manager.REMOVE_CONNECTIONS_AFTER_ATOMIC = True
 # pineboolib_app.PROJECT.conn_manager.SAFE_TIME_SLEEP = 0.1
 # pineboolib_app.PROJECT.conn_manager.set_safe_mode(2)
+
+# pineboolib_app.USE_ALTER_TABLE_LEGACY = False
 
 flfiles = os.environ.get('FLFILES_FOLDER')
 if flfiles:
