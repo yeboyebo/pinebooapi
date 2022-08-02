@@ -31,7 +31,7 @@ pineboolib_app.USE_ATOMIC_LIST = USE_ATOMIC_LIST
 pineboolib_app.USE_WEBSOCKET_CHANNEL = True
 
 CONFIG.set_value("ebcomportamiento/parseProject", False)
-CONFIG.set_value("application/callFunction", "CRON.init_cron")
+CONFIG.set_value("application/callFunction", "formCRON.init_cron")
 
 if temp_dir:
     pineboolib_app.PROJECT.tmpdir = temp_dir
