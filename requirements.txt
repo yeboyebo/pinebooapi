@@ -125,3 +125,4 @@ xmltodict==0.9.2
 zeep==4.1.0
 zipp==0.6.0
 zope.interface==5.4.0
+docxtpl
