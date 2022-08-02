@@ -31,7 +31,6 @@ pineboolib_app.USE_ATOMIC_LIST = USE_ATOMIC_LIST
 pineboolib_app.USE_WEBSOCKET_CHANNEL = True
 
 CONFIG.set_value("ebcomportamiento/parseProject", False)
-CONFIG.set_value("application/callFunction", "formCRON.init_cron")
 
 if temp_dir:
     pineboolib_app.PROJECT.tmpdir = temp_dir
@@ -52,3 +51,5 @@ pineboolib_app.PROJECT.conn_manager.set_max_connections_limit(100)
 main.startup_framework(SQL_CONN)
 pineboolib_app.PROJECT.no_python_cache = False
 pineboolib_app.SHOW_CURSOR_EVENTS = False
+
+pineboolib_app.PROJECT.call("formCRON.init_cron", [], None, False)
