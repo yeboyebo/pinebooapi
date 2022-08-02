@@ -18,5 +18,5 @@ ADD requirements.txt /src/
 RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip3 install --upgrade setuptools==57.5.0
 RUN pip3 install -r requirements.txt --use-deprecated=legacy-resolver
-RUN pip3 install pineboo==0.99.31.1
+RUN pip3 install pineboo==0.99.31.2
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo && echo "yeboyebo:yeboyebo" | chpasswd && adduser yeboyebo sudo
