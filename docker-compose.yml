@@ -27,6 +27,7 @@ services:
       - .:/src
       - ${PINEBOODIR}:/pineboo/pineboo
       - ${MODULESDIR}:/pineboo/modules
+      - ~/.config/Eneboo/PinebooSettings.ini:/home/yeboyebo/.config/Eneboo/PinebooSettings.ini
       - /run/cups/cups.sock:/run/cups/cups.sock
       - /etc/cups/cupsd.conf:/etc/cups/cupsd.conf
     command: python3 manage.py runserver 0.0.0.0:8000 --noreload
@@ -45,3 +46,4 @@ networks:
     ipam:
       config:
         - subnet: 172.${DOCKER_IP}.0.0/16
+
