@@ -22,7 +22,8 @@ if StaticLoader:
     CONFIG.set_value("StaticLoader/%s/enabled" % (DATABASES["default"]["NAME"]), True)  # Para activar carga estática
     CONFIG.set_value("StaticLoader/%s/dirs" % DATABASES["default"]["NAME"], dirs)  # Directorios para carga estatica(Configurar en local.py, Ej: dirs = [True, "/home/modulos/api/scripts", True, "/home/modulos/libreria/scripts"])
     CONFIG.set_value("ebcomportamiento/SLConsola", True)   # Muestra debug por consola
-    CONFIG.set_value("application/dbadmin_enabled", True)  # para dbadmin (comprobación de mtd's)
+    # CONFIG.set_value("application/dbadmin_enabled", True)  # para dbadmin (comprobación de mtd's)
+    pineboolib_app.PROJECT._db_admin_mode = True
 else:
     CONFIG.set_value("StaticLoader/%s/enabled" % (DATABASES["default"]["NAME"]), False)
 
