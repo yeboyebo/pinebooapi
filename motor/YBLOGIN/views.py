@@ -115,6 +115,24 @@ def deleteUser(request, user):
 from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
+def forgot_password(request):
+    try:
+        params = json.loads(request.body.decode("utf-8"))
+        username = params["username"]
+    except Exception:
+        username = request.POST.get("username", None)
+
+    try:
+        APIQSA.forgot_password(username)
+        result = HttpResponse(json.dumps({}), status=200)
+
+    except Exception as e:
+        result = HttpResponse(json.dumps({'error': str(e)}), status=404)
+    result['Access-Control-Allow-Origin'] = '*'
+    return result
+
+
+@csrf_exempt
 def token_auth(request):
     try:
         params = json.loads(request.body.decode("utf-8"))
@@ -149,8 +167,6 @@ def token_auth(request):
             token, _ = Token.objects.get_or_create(user=authuser)
             resul = HttpResponse(json.dumps({'token': token.key}), status=200)
     except Exception as e:
-        print("-----------------------")
-        print(e)
         resul = HttpResponse(json.dumps({'error': str(e)}), status=404)
     resul['Access-Control-Allow-Origin'] = '*'
     return resul

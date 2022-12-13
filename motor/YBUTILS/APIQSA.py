@@ -55,3 +55,28 @@ class APIQSA:
             print(bcolors.ENDC)
             raise Exception(e)
         return obj
+
+    def forgot_password(username):
+        try:
+            obj = qsa.from_project("formAPI").forgot_password(username)
+        except Exception as e:
+            print(bcolors.FAIL + "Excepcion " + str(e) + bcolors.ENDC)
+
+            ex_type, ex_value, ex_traceback = sys.exc_info()
+
+            # Extract unformatter stack traces as tuples
+            trace_back = traceback.extract_tb(ex_traceback)
+
+            # Format stacktrace
+            stack_trace = list()
+
+            for trace in trace_back:
+                stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
+
+            print(bcolors.WARNING)
+            print("Exception type : %s " % ex_type.__name__)
+            print("Exception message : %s" %ex_value)
+            print("Stack trace : %s" %"\n".join(stack_trace))
+            print(bcolors.ENDC)
+            raise Exception(e)
+        return obj

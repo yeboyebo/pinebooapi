@@ -131,6 +131,9 @@ class yblogin(interna):
     def yblogin_logout(self, *args, **kwargs):
         return auth_views.logout(*args, **kwargs)
 
+    def yblogin_forgot_password(self, *args, **kwargs):
+        return auth_views.forgot_password(*args, **kwargs)
+
     def yblogin_system(self, request):
         history = cacheController.addHistory(request, None, None)
         history = history["list"][history["pos"] - 1] if history["pos"] > 0 else history["list"][history["pos"]]
@@ -313,6 +316,9 @@ class yblogin(interna):
 
     def logout(self, *args, **kwargs):
         return self.iface.yblogin_logout(*args, **kwargs)
+
+    def forgot_password(self, *args, **kwargs):
+        return self.iface.yblogin_forgot_password(*args, **kwargs)
 
     @decoradores.check_authentication_iface
     @decoradores.check_system_authentication_iface
