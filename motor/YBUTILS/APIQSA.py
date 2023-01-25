@@ -26,6 +26,20 @@ class APIQSA:
         obj = qsa.from_project("formAPI").user_is_allowed(metodoHTTP, username, model, method)
         return obj
 
+    def log_exception(e):
+        print(bcolors.FAIL + "Excepcion " + str(e) + bcolors.ENDC)
+        ex_type, ex_value, ex_traceback = sys.exc_info()
+        # Extract unformatter stack traces as tuples
+        trace_back = traceback.extract_tb(ex_traceback)
+        # Format stacktrace
+        stack_trace = list()
+        for trace in trace_back:
+            stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
+        print(bcolors.WARNING)
+        print("Exception type : %s " % ex_type.__name__)
+        print("Exception message : %s" %ex_value)
+        print("Stack trace : %s" %"\n".join(stack_trace))
+
     def entry_point(metodoHTTP, modulo, username, params=None, accion=None):
         obj = qsa.from_project("formAPI").entry_point(metodoHTTP, modulo, username, params, accion)
         print()
@@ -35,23 +49,7 @@ class APIQSA:
         try:
             obj = qsa.from_project("formAPI").login(username, password, params)
         except Exception as e:
-            print(bcolors.FAIL + "Excepcion " + str(e) + bcolors.ENDC)
-
-            ex_type, ex_value, ex_traceback = sys.exc_info()
-
-            # Extract unformatter stack traces as tuples
-            trace_back = traceback.extract_tb(ex_traceback)
-
-            # Format stacktrace
-            stack_trace = list()
-
-            for trace in trace_back:
-                stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
-
-            print(bcolors.WARNING)
-            print("Exception type : %s " % ex_type.__name__)
-            print("Exception message : %s" %ex_value)
-            print("Stack trace : %s" %"\n".join(stack_trace))
+            log_exception(e)
             print(bcolors.ENDC)
             raise Exception(e)
         return obj
@@ -60,23 +58,21 @@ class APIQSA:
         try:
             obj = qsa.from_project("formAPI").forgot_password(username)
         except Exception as e:
-            print(bcolors.FAIL + "Excepcion " + str(e) + bcolors.ENDC)
+            log_exception(e)
+        return obj
 
-            ex_type, ex_value, ex_traceback = sys.exc_info()
+    def check_hashlink(username, hash, type):
+        try:
+            obj = qsa.from_project("formAPI").check_hashlink(username, hash, type)
+        except Exception as e:
+            log_exception(e)
+            raise Exception(e)
+        return obj
 
-            # Extract unformatter stack traces as tuples
-            trace_back = traceback.extract_tb(ex_traceback)
-
-            # Format stacktrace
-            stack_trace = list()
-
-            for trace in trace_back:
-                stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
-
-            print(bcolors.WARNING)
-            print("Exception type : %s " % ex_type.__name__)
-            print("Exception message : %s" %ex_value)
-            print("Stack trace : %s" %"\n".join(stack_trace))
-            print(bcolors.ENDC)
+    def use_hashlink(hashcode, action, params={}, username=None):
+        try:
+            obj = qsa.from_project("formAPI").use_hashlink(hashcode, action, params, username)
+        except Exception as e:
+            log_exception(e)
             raise Exception(e)
         return obj

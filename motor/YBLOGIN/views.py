@@ -133,6 +133,47 @@ def forgot_password(request):
 
 
 @csrf_exempt
+def check_hashlink(request, hash=None, type=None):
+    if request.method == 'POST':
+        try:
+            request_params = json.loads(request.body.decode("utf-8"))
+        except Exception:
+            request_params = request.POST
+
+        action = request_params.get('action', None)
+        
+        if action == 'change_password':
+            hashcode = request_params.get('hashcode', None)
+            password = request_params.get('password', None)
+            params = {
+                "password": password
+            }
+            try:
+                APIQSA.use_hashlink(hashcode, action, params)
+                result = HttpResponse(json.dumps({}), status=200)
+
+            except Exception as e:
+                result = HttpResponse(json.dumps({'error': str(e)}), status=404)
+            result['Access-Control-Allow-Origin'] = '*'
+            return result
+    else:
+        try:
+            params = json.loads(request.body.decode("utf-8"))
+            username = params["username"]
+        except Exception:
+            username = request.POST.get("username", None)
+
+        try:
+            APIQSA.check_hashlink(username, hash, type)
+            result = HttpResponse(json.dumps({}), status=200)
+
+        except Exception as e:
+            result = HttpResponse(json.dumps({'error': str(e)}), status=404)
+        result['Access-Control-Allow-Origin'] = '*'
+        return result
+
+
+@csrf_exempt
 def token_auth(request):
     try:
         params = json.loads(request.body.decode("utf-8"))
