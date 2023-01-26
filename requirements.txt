@@ -37,7 +37,7 @@ ecdsa==0.13
 entrypoints==0.3
 et-xmlfile==1.0.1
 gitdb2==2.0.3
-GitPython==2.1.1
+GitPython==3.1.30
 gunicorn==19.6.0
 hiredis==1.0.1
 hyperlink==17.2.1
