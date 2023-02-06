@@ -49,7 +49,7 @@ class APIQSA:
         try:
             obj = qsa.from_project("formAPI").login(username, password, params)
         except Exception as e:
-            log_exception(e)
+            APIQSA.log_exception(e)
             print(bcolors.ENDC)
             raise Exception(e)
         return obj
@@ -58,14 +58,14 @@ class APIQSA:
         try:
             obj = qsa.from_project("formAPI").forgot_password(username)
         except Exception as e:
-            log_exception(e)
+            APIQSA.log_exception(e)
         return obj
 
     def check_hashlink(username, hash, type):
         try:
             obj = qsa.from_project("formAPI").check_hashlink(username, hash, type)
         except Exception as e:
-            log_exception(e)
+            APIQSA.log_exception(e)
             raise Exception(e)
         return obj
 
@@ -73,6 +73,6 @@ class APIQSA:
         try:
             obj = qsa.from_project("formAPI").use_hashlink(hashcode, action, params, username)
         except Exception as e:
-            log_exception(e)
+            APIQSA.log_exception(e)
             raise Exception(e)
         return obj
