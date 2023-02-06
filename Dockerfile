@@ -4,7 +4,7 @@ MAINTAINER Javier Cortés <javier@yeboyebo.es>
 
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update && apt-get install -y apt-utils build-essential python3-pip vim tzdata libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev freetds-dev libgl1 libegl1 libxkbcommon-x11-0
+RUN apt-get update && apt-get install -y apt-utils build-essential python3-pip vim tzdata libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev freetds-dev libgl1 libegl1 libxkbcommon-x11-0 libjpeg-dev
 
 ENV TZ=Europe/Madrid
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
