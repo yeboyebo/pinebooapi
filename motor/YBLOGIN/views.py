@@ -12,13 +12,14 @@ from YBUTILS.APIQSA import APIQSA
 
 
 def forbiddenError(request):
-    return render(request, 'users/403.html')
+    return render(request, "users/403.html")
 
 
-@login_required(login_url='/login')
+@login_required(login_url="/login")
 def index(request):
-    error = ''
-    return render(request, 'login/index.html', {'error': error})
+    error = ""
+    return render(request, "login/index.html", {"error": error})
+
 
 # def login(request, error=None):
 #     if not error:
@@ -27,11 +28,11 @@ def index(request):
 
 
 def signup(request, error):
-    return render(request, 'login/signup.html', {'error': error})
+    return render(request, "login/signup.html", {"error": error})
 
 
 def account(request, error):
-    return render(request, 'login/account.html', {'error': error, 'usuario': request.user})
+    return render(request, "login/account.html", {"error": error, "usuario": request.user})
 
 
 def is_admin(user):
@@ -39,17 +40,17 @@ def is_admin(user):
 
 
 def auth_login(request):
-    if request.method == 'POST':
-        action = request.POST.get('action', None)
-        username = request.POST.get('username', None).lower()
-        password = request.POST.get('password', None)
+    if request.method == "POST":
+        action = request.POST.get("action", None)
+        username = request.POST.get("username", None).lower()
+        password = request.POST.get("password", None)
 
-        if action == 'login':
+        if action == "login":
             user = authenticate(username=username, password=password)
             if user is not None:
                 login_auth(request, user)
             else:
-                return login(request, 'Error de autentificación')
+                return login(request, "Error de autentificación")
             # Despues de logear guardamos en cache los permisos del usuario
             # Hay que revisar que ocurre cuando cierra el navegador
             # accessControl.accessControl.registraAC()
@@ -59,38 +60,38 @@ def auth_login(request):
     return login(request)
 
 
-@login_required(login_url='/login')
-@user_passes_test(is_admin, login_url='/login')
+@login_required(login_url="/login")
+@user_passes_test(is_admin, login_url="/login")
 def signup_request(request):
-    if request.method == 'POST':
-        action = request.POST.get('action', None)
-        username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
-        password2 = request.POST.get('password2', None)
+    if request.method == "POST":
+        action = request.POST.get("action", None)
+        username = request.POST.get("username", None)
+        password = request.POST.get("password", None)
+        password2 = request.POST.get("password2", None)
 
-        if action == 'signup':
+        if action == "signup":
             if password == password2:
                 try:
                     user = User.objects.create_user(username=username, password=password)
                     user.save()
-                    return signup(request, username + ' Añadido')
+                    return signup(request, username + " Añadido")
                 except Exception as exc:
                     print(exc)
-                    return signup(request, 'El usuario ya existe')
+                    return signup(request, "El usuario ya existe")
             else:
-                return signup(request, 'Las contraseñas no coinciden')
-    return signup(request, '')
+                return signup(request, "Las contraseñas no coinciden")
+    return signup(request, "")
 
 
-@login_required(login_url='/login')
+@login_required(login_url="/login")
 def account_request(request):
-    if request.method == 'POST':
-        action = request.POST.get('action', None)
+    if request.method == "POST":
+        action = request.POST.get("action", None)
         # username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
-        password2 = request.POST.get('password2', None)
+        password = request.POST.get("password", None)
+        password2 = request.POST.get("password2", None)
 
-        if action == 'account':
+        if action == "account":
             if password == password2:
                 try:
                     usuario = str(request.user.username)
@@ -100,19 +101,21 @@ def account_request(request):
                     return HttpResponseRedirect("/login")
                 except Exception as exc:
                     print(exc)
-                    return account(request, 'Error inesperado consulte administrador')
+                    return account(request, "Error inesperado consulte administrador")
             else:
-                return account(request, 'Las contraseñas no coinciden')
-    return account(request, '')
+                return account(request, "Las contraseñas no coinciden")
+    return account(request, "")
 
 
-@login_required(login_url='/login')
-@user_passes_test(is_admin, login_url='/login')
+@login_required(login_url="/login")
+@user_passes_test(is_admin, login_url="/login")
 def deleteUser(request, user):
     User.objects.filter(username=user).delete()
-    return HttpResponseRedirect('/users')
+    return HttpResponseRedirect("/users")
+
 
 from django.views.decorators.csrf import csrf_exempt
+
 
 @csrf_exempt
 def forgot_password(request):
@@ -127,34 +130,32 @@ def forgot_password(request):
         result = HttpResponse(json.dumps({}), status=200)
 
     except Exception as e:
-        result = HttpResponse(json.dumps({'error': str(e)}), status=404)
-    result['Access-Control-Allow-Origin'] = '*'
+        result = HttpResponse(json.dumps({"error": str(e)}), status=404)
+    result["Access-Control-Allow-Origin"] = "*"
     return result
 
 
 @csrf_exempt
 def check_hashlink(request, hash=None, type=None):
-    if request.method == 'POST':
+    if request.method == "POST":
         try:
             request_params = json.loads(request.body.decode("utf-8"))
         except Exception:
             request_params = request.POST
 
-        action = request_params.get('action', None)
-        
-        if action == 'change_password':
-            hashcode = request_params.get('hashcode', None)
-            password = request_params.get('password', None)
-            params = {
-                "password": password
-            }
+        action = request_params.get("action", None)
+
+        if action == "change_password":
+            hashcode = request_params.get("hashcode", None)
+            password = request_params.get("password", None)
+            params = {"password": password}
             try:
                 APIQSA.use_hashlink(hashcode, action, params)
                 result = HttpResponse(json.dumps({}), status=200)
 
             except Exception as e:
-                result = HttpResponse(json.dumps({'error': str(e)}), status=404)
-            result['Access-Control-Allow-Origin'] = '*'
+                result = HttpResponse(json.dumps({"error": str(e)}), status=404)
+            result["Access-Control-Allow-Origin"] = "*"
             return result
     else:
         try:
@@ -168,8 +169,8 @@ def check_hashlink(request, hash=None, type=None):
             result = HttpResponse(json.dumps({}), status=200)
 
         except Exception as e:
-            result = HttpResponse(json.dumps({'error': str(e)}), status=404)
-        result['Access-Control-Allow-Origin'] = '*'
+            result = HttpResponse(json.dumps({"error": str(e)}), status=404)
+        result["Access-Control-Allow-Origin"] = "*"
         return result
 
 
@@ -206,11 +207,12 @@ def token_auth(request):
                 user.save()
                 authuser = authenticate(username=str(authusername), password=password)
             token, _ = Token.objects.get_or_create(user=authuser)
-            resul = HttpResponse(json.dumps({'token': token.key}), status=200)
+            resul = HttpResponse(json.dumps({"token": token.key}), status=200)
     except Exception as e:
-        resul = HttpResponse(json.dumps({'error': str(e)}), status=404)
-    resul['Access-Control-Allow-Origin'] = '*'
+        resul = HttpResponse(json.dumps({"error": str(e)}), status=404)
+    resul["Access-Control-Allow-Origin"] = "*"
     return resul
+
 
 @csrf_exempt
 def login(request):
@@ -254,6 +256,30 @@ def login(request):
     except Exception as e:
         print("-----------------------")
         print(e)
-        resul = HttpResponse(json.dumps({'error': str(e)}), status=404)
-    resul['Access-Control-Allow-Origin'] = '*'
+        resul = HttpResponse(json.dumps({"error": str(e)}), status=404)
+    resul["Access-Control-Allow-Origin"] = "*"
     return resul
+
+
+@csrf_exempt
+def end_point(request, name=None, action=None):
+    request_params = []
+    try:
+        if request.body:
+            try:
+                request_params = json.loads(request.body.decode("utf-8"))
+            except Exception:
+                if request.method == "POST":
+                    request_params = request.POST
+
+        if request_params:
+            APIQSA.end_point(name, action, request_params)
+            result = HttpResponse(json.dumps({}), status=200)
+        else:
+            raise Exception("No hay datos")
+
+    except Exception as e:
+        result = HttpResponse(json.dumps({"error": str(e)}), status=404)
+
+    result["Access-Control-Allow-Origin"] = "*"
+    return result

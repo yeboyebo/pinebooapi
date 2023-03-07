@@ -1,5 +1,6 @@
 import sys
 import traceback
+
 try:
     from pineboolib.qsa import qsa
     from pineboolib import application
@@ -8,18 +9,17 @@ except:
 
 
 class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+    HEADER = "\033[95m"
+    OKBLUE = "\033[94m"
+    OKGREEN = "\033[92m"
+    WARNING = "\033[93m"
+    FAIL = "\033[91m"
+    ENDC = "\033[0m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
 
 
 class APIQSA:
-
     def getuseracl(metodoHTTP, params, username):
         model = params["data"]["model"] if "model" in params["data"] else None
         method = params["data"]["method"] if "method" in params["data"] else None
@@ -34,11 +34,14 @@ class APIQSA:
         # Format stacktrace
         stack_trace = list()
         for trace in trace_back:
-            stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
+            stack_trace.append(
+                "File : %s , Line : %d, Func.Name : %s, Message : %s"
+                % (trace[0], trace[1], trace[2], trace[3])
+            )
         print(bcolors.WARNING)
         print("Exception type : %s " % ex_type.__name__)
-        print("Exception message : %s" %ex_value)
-        print("Stack trace : %s" %"\n".join(stack_trace))
+        print("Exception message : %s" % ex_value)
+        print("Stack trace : %s" % "\n".join(stack_trace))
 
     def entry_point(metodoHTTP, modulo, username, params=None, accion=None):
         obj = qsa.from_project("formAPI").entry_point(metodoHTTP, modulo, username, params, accion)
@@ -72,6 +75,14 @@ class APIQSA:
     def use_hashlink(hashcode, action, params={}, username=None):
         try:
             obj = qsa.from_project("formAPI").use_hashlink(hashcode, action, params, username)
+        except Exception as e:
+            APIQSA.log_exception(e)
+            raise Exception(e)
+        return obj
+
+    def end_point(name, action, params={}):
+        try:
+            obj = qsa.from_project("formAPI").end_point(name, action, params)
         except Exception as e:
             APIQSA.log_exception(e)
             raise Exception(e)
