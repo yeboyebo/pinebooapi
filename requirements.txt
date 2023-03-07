@@ -33,7 +33,7 @@ djangorestframework==3.11.0
 docutils==0.15.2
 docxtpl==0.16.3
 easygui==0.98.1
-ecdsa==0.13
+ecdsa==0.13.3
 entrypoints==0.3
 et-xmlfile==1.0.1
 gitdb2==2.0.3
