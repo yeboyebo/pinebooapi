@@ -84,7 +84,7 @@ pydocstyle==5.0.1
 PyExecJS==1.1.0
 pyflakes==2.1.1
 PyGithub==1.31
-Pygments==2.5.2
+Pygments==2.7.4
 PyHamcrest==1.9.0
 pymssql==2.1.5
 pyOpenSSL==19.1.0
