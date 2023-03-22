@@ -82,7 +82,7 @@ class APIQSA:
 
     def end_point(name, action, params={}):
         try:
-            obj = qsa.from_project("formAPI").end_point(name, action, params)
+            obj = qsa.from_project("formAPI").external_entry_point(name, action, params)
         except Exception as e:
             APIQSA.log_exception(e)
             raise Exception(e)
