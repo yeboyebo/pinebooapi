@@ -20,18 +20,28 @@ DATABASES = {
 }
 
 websocket = os.environ.get("WEBSOCKET") or False
-USE_ATOMIC_LIST = os.environ.get("USE_ATOMIC_LIST") or False
-StaticLoader = True
-dirs = []
-dir_list = os.environ.get("STATIC_LOADER_DIRS")
-if dir_list is not None and dir_list != "":
-    for pdir in os.environ.get("STATIC_LOADER_DIRS").split(","):
-        dirs.append(True)
-        dirs.append(pdir)
-else:
-    StaticLoader = False
 
-temp_dir = os.environ.get("TEMPDIR")
+dirs_list = []
+static_loaders_dirs = os.environ.get("STATIC_LOADER_DIRS") or ""
+if static_loaders_dirs:
+    for pdir in static_loaders_dirs.split(","):
+        dirs_list.append(True)
+        dirs_list.append(pdir)
+
+
+temp_dir = os.environ.get("TEMPDIR") or ""
+flfiles = os.environ.get("FLFILES_FOLDER") or ""
+dbadmin_enabled = os.environ.get("DBADMIN") or False
+clear_python_cache = os.environ.get("CLEAR_PYTHON_CACHE") or False
+delete_all_cache = os.environ.get("CLEAR_ALL_CACHE") or False
+delete_base_cache = os.environ.get("CLEAR_CACHE_BASE") or False
+remove_conn_after_atomic = os.environ.get("REMOVE_CONNECTION_AFTER_ATOMIC") or True
+use_alembic_as_altertable = os.environ.get("USE_ALEMBIC") or False
+qsa_use_strict_mode = os.environ.get("QSA_USE_STRICK_MODE") or False
+enable_acls = os.environ.get("ENABLE_ACLS") or False
+show_cursor_events = os.environ.get("SHOW_CURSOR_EVENTS") or False
+parse_project_on_init = os.environ.get("PARSE_ALL_PROJECT") or False
+use_threads_parser_qsa = os.environ.get("USE_THREADS_ON_QSA_PARSER") or False
 
 if websocket == "True":
     CHANNEL_LAYERS = {
