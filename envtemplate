@@ -9,5 +9,33 @@ DBPOST=**__dbport__**
 PINEBOODIR=**/home/*****/Pineboo/**
 MODULESDIR=**/ruta/modules**
 TEMPDIR=/pineboo/pineboo/tempdata
-STATIC_LOADER_DIRS=**dirs**
+
+# Activa websocket
 WEBSOCKET=True
+
+# Usa una carpeta para cargar los ficheros, en puesto de la tabla flfiles.Implica carga estática desde esta carpeta.
+# FLFILES_FOLDER=/pineboo/modules/
+# Usa una carpeta para sobrecargar los ficheros de flfiles en caché.
+# STATIC_LOADER_DIRS=/pineboo/static/
+# Activa modo dbadmin ( regenera tablas, etc).Por defecto se usa modo Quick, que no regenera tablas , etc.
+# DBADMIN=True
+# Elimina los ficheros .PY existentes en el caché y los vuelve a regenerar
+# CLEAR_PYTHON_CACHE=True 
+# Elimina los ficheros existentes en el caché
+# CLEAR_ALL_CACHE=True 
+# Elimina los ficheros de la carpeta base de tmpemfiles ( imagenes, etc...)
+# DELETE_BASE_CACHE=True
+# Mantiene las conexiones abiertas despues de un decorador atómico.
+# REMOVE_CONNECTIONS_AFTER_ATOMIC=False
+# Activa alembic para controlar los altertables.
+# USE_ALEMBIC=True
+# Usa modo estricto en el parser QSA. Si no encuentra la declaración de alguna variable o funcion la marca con __undef__
+# QSA_USE_STRICK_MODE=True
+# Desactiva la ACLS establecidas en flfiles.
+# ENABLE_ACLS=False
+# Muestra los eventos de los cursores FLSqlCursor.
+# SHOW_CURSOR_EVENTS=True
+# Convierte todo el proyecto al poblar la caché.
+# PARSE_ALL_PROJECT=True
+# Usa multiples hilos en el parser qsa.
+# USE_THREADS_ON_QSA_PARSER=True
