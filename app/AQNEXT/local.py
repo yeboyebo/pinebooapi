@@ -20,7 +20,6 @@ DATABASES = {
 }
 
 websocket = os.environ.get("WEBSOCKET") or False
-
 dirs_list = []
 static_loaders_dirs = os.environ.get("STATIC_LOADER_DIRS") or ""
 if static_loaders_dirs:
@@ -38,7 +37,7 @@ delete_base_cache = os.environ.get("CLEAR_CACHE_BASE") or False
 remove_conn_after_atomic = os.environ.get("REMOVE_CONNECTION_AFTER_ATOMIC") or True
 use_alembic_as_altertable = os.environ.get("USE_ALEMBIC") or False
 qsa_use_strict_mode = os.environ.get("QSA_USE_STRICK_MODE") or False
-enable_acls = os.environ.get("ENABLE_ACLS") or False
+enable_acls = os.environ.get("ENABLE_ACLS") or True
 show_cursor_events = os.environ.get("SHOW_CURSOR_EVENTS") or False
 parse_project_on_init = os.environ.get("PARSE_ALL_PROJECT") or False
 use_threads_parser_qsa = os.environ.get("USE_THREADS_ON_QSA_PARSER") or False

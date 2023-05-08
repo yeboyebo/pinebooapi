@@ -14,7 +14,8 @@ def nombre_session():
 
 def to_bool(texto: str):
     """Convierte en bool."""
-    return texto.lower() in ("True", True, 1)
+    result = str(texto).lower() in ("true", "1")
+    return result
 
 
 pineboolib_app.PROJECT.set_session_function(nombre_session)
@@ -50,7 +51,7 @@ if temp_dir:
 qsaparser.USE_THREADS = to_bool(use_threads_parser_qsa)
 qsaparser.STRICT_MODE = to_bool(qsa_use_strict_mode)
 
-pineboolib_app.PARSE_PROJECT_ON_INIT = not to_bool(parse_project_on_init)
+pineboolib_app.PARSE_PROJECT_ON_INIT = to_bool(parse_project_on_init)
 
 pineboolib_app.PROJECT.USE_FLFILES_FOLDER = flfiles
 pineboolib_app.PROJECT.db_admin_mode = to_bool(dbadmin_enabled)
@@ -71,6 +72,5 @@ main.startup_framework(SQL_CONN)
 pineboolib_app.PROJECT.conn_manager.REMOVE_CONNECTIONS_AFTER_ATOMIC = to_bool(
     remove_conn_after_atomic
 )
-
 
 pineboolib_app.PROJECT.call("formCRON.init_cron", [], None, False)
