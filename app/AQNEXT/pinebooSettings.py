@@ -51,6 +51,7 @@ if temp_dir:
 qsaparser.USE_THREADS = to_bool(use_threads_parser_qsa)
 qsaparser.STRICT_MODE = to_bool(qsa_use_strict_mode)
 
+pineboolib_app.ALLOW_ALTER_TABLE=to_bool(allow_alter_table)
 pineboolib_app.PARSE_PROJECT_ON_INIT = to_bool(parse_project_on_init)
 
 pineboolib_app.PROJECT.USE_FLFILES_FOLDER = flfiles

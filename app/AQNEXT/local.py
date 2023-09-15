@@ -41,6 +41,7 @@ enable_acls = os.environ.get("ENABLE_ACLS") or True
 show_cursor_events = os.environ.get("SHOW_CURSOR_EVENTS") or False
 parse_project_on_init = os.environ.get("PARSE_ALL_PROJECT") or False
 use_threads_parser_qsa = os.environ.get("USE_THREADS_ON_QSA_PARSER") or False
+allow_alter_table = os.environ.get("ALLOW_ALTER_TABLE") or False
 
 if websocket == "True":
     CHANNEL_LAYERS = {
