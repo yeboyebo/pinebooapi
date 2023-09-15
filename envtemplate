@@ -39,3 +39,5 @@ WEBSOCKET=True
 # PARSE_ALL_PROJECT=True
 # Usa multiples hilos en el parser qsa.
 # USE_THREADS_ON_QSA_PARSER=True
+# Habilita alter table si tiene que regenerar tablas.
+# ALLOW_ALTER_TABLE=True
