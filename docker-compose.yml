@@ -20,7 +20,7 @@ services:
       - ./.env
     ports:
       - "${PORT}:8000"
-      - "632:631"
+      - "${PORT2}"
     extra_hosts:
       - "dbhost:${DBHOST}"
     volumes:
@@ -38,7 +38,7 @@ services:
     image: redis:latest
     restart: always        
     ports:
-      - '6379:6379'
+      - '${REDIS_PORT}'
 
 networks:
   app_network:
