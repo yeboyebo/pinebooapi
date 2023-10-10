@@ -12,6 +12,7 @@ TEMPDIR=/pineboo/pineboo/tempdata
 
 PORT2=632:631
 REDIS_PORT=6379:6379
+IMAGESVOL=/
 
 # Activa websocket
 WEBSOCKET=True
