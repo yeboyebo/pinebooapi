@@ -13,6 +13,8 @@ RUN mkdir /pineboo/
 RUN mkdir /src/
 RUN mkdir /src/app/
 RUN mkdir /src/app/logs
+RUN mkdir /static/
+RUN mkdir /static/images/
 WORKDIR /src/
 ADD requirements.txt /src/
 RUN /usr/local/bin/python3 -m pip install --upgrade pip
