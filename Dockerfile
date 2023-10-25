@@ -14,7 +14,7 @@ RUN mkdir /src/
 RUN mkdir /src/app/
 RUN mkdir /src/app/logs
 RUN echo "COMPROBANDO PERMISOS /src"
-RUN ls -la /src
+RUN ls -la -R /src
 RUN mkdir /static/
 RUN mkdir /static/images/
 WORKDIR /src/
