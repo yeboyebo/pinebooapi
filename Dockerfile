@@ -13,6 +13,7 @@ RUN mkdir /pineboo/
 RUN mkdir /src/
 RUN mkdir /src/app/
 RUN mkdir /src/app/logs
+RUN chmod -R a+rw /src
 RUN echo "COMPROBANDO PERMISOS /src"
 RUN ls -la -R /src
 RUN mkdir /static/
