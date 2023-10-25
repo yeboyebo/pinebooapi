@@ -13,6 +13,7 @@ RUN mkdir /pineboo/
 RUN mkdir /src/
 RUN mkdir /src/app/
 RUN mkdir /src/app/logs
+RUN touch /src/app/logs/yebo.log
 RUN chmod -R a+rw /src
 RUN echo "COMPROBANDO PERMISOS /src"
 RUN ls -la -R /src
@@ -29,5 +30,8 @@ RUN echo "CREANDO USUARIO 'yeboyebo'"
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo 
 RUN echo "yeboyebo:yeboyebo" | chpasswd 
 RUN adduser yeboyebo sudo
-RUN echo "COMPROBANDO EXISTENCIA USUARIO 'yeboyebo'"
+RUN echo "COMPROBANDO EXISTENCIA USUARIO 'yeboyebo' y permisos"
 RUN cat /etc/passwd | grep yeboyebo
+USER yeboyebo
+RUN whoami
+RUN ls -la -R /src
