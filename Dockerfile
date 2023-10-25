@@ -26,4 +26,4 @@ RUN adduser --quiet --disabled-password --gecos '' yeboyebo
 RUN echo "yeboyebo:yeboyebo" | chpasswd 
 RUN adduser yeboyebo sudo
 RUN echo "COMPROBANDO EXISTENCIA USUARIO 'yeboyebo'"
-RUN cat /etc/sudoers
+RUN cat /etc/passwd | grep yeboyebo
