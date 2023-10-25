@@ -21,6 +21,9 @@ RUN /usr/local/bin/python3 -m pip install --upgrade pip
 RUN pip3 install --upgrade setuptools==57.5.0
 RUN pip3 install -r requirements.txt --use-deprecated=legacy-resolver
 RUN pip3 install pineboo==0.99.79
+RUN echo "CREANDO USUARIO 'yeboyebo'"
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo 
 RUN echo "yeboyebo:yeboyebo" | chpasswd 
 RUN adduser yeboyebo sudo
+RUN echo "COMPROBANDO EXISTENCIA USUARIO 'yeboyebo'"
+RUN cat /etc/password | grep yeboyebo
