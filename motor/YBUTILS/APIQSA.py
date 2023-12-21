@@ -62,6 +62,7 @@ class APIQSA:
             obj = qsa.from_project("formAPI").forgot_password(username)
         except Exception as e:
             APIQSA.log_exception(e)
+            raise Exception(e)
         return obj
 
     def check_hashlink(username, hash, type):
