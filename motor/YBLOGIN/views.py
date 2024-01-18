@@ -126,7 +126,7 @@ def forgot_password(request):
         username = request.POST.get("username", None)
 
     try:
-        APIQSA.forgot_password(username)
+        APIQSA.forgot_password(username, params)
         result = HttpResponse(json.dumps({}), status=200)
 
     except Exception as e:
