@@ -134,6 +134,23 @@ def forgot_password(request):
     result["Access-Control-Allow-Origin"] = "*"
     return result
 
+@csrf_exempt
+def create_user(request):
+    try:
+        params = json.loads(request.body.decode("utf-8"))
+        username = params["username"]
+    except Exception:
+        username = request.POST.get("username", None)
+
+    try:
+        APIQSA.create_user(username, params)
+        result = HttpResponse(json.dumps({}), status=200)
+
+    except Exception as e:
+        result = HttpResponse(json.dumps({"error": str(e)}), status=404)
+    result["Access-Control-Allow-Origin"] = "*"
+    return result
+
 
 @csrf_exempt
 def check_hashlink(request, hash=None, type=None):
@@ -148,7 +165,8 @@ def check_hashlink(request, hash=None, type=None):
         if action == "change_password":
             hashcode = request_params.get("hashcode", None)
             password = request_params.get("password", None)
-            params = {"password": password}
+            loginType = request_params.get("loginType", None)
+            params = {"password": password, "loginType": loginType}
             try:
                 APIQSA.use_hashlink(hashcode, action, params)
                 result = HttpResponse(json.dumps({}), status=200)

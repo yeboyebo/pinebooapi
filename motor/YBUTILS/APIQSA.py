@@ -64,6 +64,14 @@ class APIQSA:
             APIQSA.log_exception(e)
             raise Exception(e)
         return obj
+    
+    def create_user(username, params):
+        try:
+            obj = qsa.from_project("formAPI").create_user(username, params)
+        except Exception as e:
+            APIQSA.log_exception(e)
+            raise Exception(e)
+        return obj    
 
     def check_hashlink(username, hash, type):
         try:

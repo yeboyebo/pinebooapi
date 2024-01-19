@@ -133,6 +133,9 @@ class yblogin(interna):
 
     def yblogin_forgot_password(self, *args, **kwargs):
         return auth_views.forgot_password(*args, **kwargs)
+    
+    def yblogin_create_user(self, *args, **kwargs):
+        return auth_views.create_user(*args, **kwargs)    
 
     def yblogin_check_hashlink(self, *args, **kwargs):
         return auth_views.check_hashlink(*args, **kwargs)
@@ -322,6 +325,9 @@ class yblogin(interna):
 
     def forgot_password(self, *args, **kwargs):
         return self.iface.yblogin_forgot_password(*args, **kwargs)
+    
+    def create_user(self, *args, **kwargs):
+        return self.iface.yblogin_create_user(*args, **kwargs)    
 
     def check_hashlink(self, *args, **kwargs):
         return self.iface.yblogin_check_hashlink(*args, **kwargs)
