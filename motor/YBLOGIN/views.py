@@ -175,6 +175,19 @@ def check_hashlink(request, hash=None, type=None):
                 result = HttpResponse(json.dumps({"error": str(e)}), status=404)
             result["Access-Control-Allow-Origin"] = "*"
             return result
+        if action == "create_user_confirm":
+            hashcode = request_params.get("hashcode", None)
+            user_data = request_params.get("user_data", None)
+            loginType = request_params.get("loginType", None)
+            params = {"user_data": user_data, "loginType": loginType}
+            try:
+                APIQSA.use_hashlink(hashcode, action, params)
+                result = HttpResponse(json.dumps({}), status=200)
+
+            except Exception as e:
+                result = HttpResponse(json.dumps({"error": str(e)}), status=404)
+            result["Access-Control-Allow-Origin"] = "*"
+            return result        
     else:
         try:
             params = json.loads(request.body.decode("utf-8"))
