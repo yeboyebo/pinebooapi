@@ -5,13 +5,22 @@ DOCKER_IP=55
 DBNAME=**__dbname__**
 DBUSER=**__dbuser__**
 DBPASSWORD=**__dbpassword__**
-DBPOST=**__dbport__**
+DBPORT=**__dbport__**
 PINEBOODIR=**/home/*****/Pineboo/**
 MODULESDIR=**/ruta/modules**
 TEMPDIR=/pineboo/pineboo/tempdata
 
+# PORT2=632:631
+# REDIS_PORT=6379:6379
+# IMAGESVOL=/
+# DJANGO_USER=root
+
+# Para especificar url quimeraps ( por convenio)
+#URL_QUIMERA_PS=192.168.1.254
+
 # Activa websocket
 WEBSOCKET=True
+
 
 # Usa una carpeta para cargar los ficheros, en puesto de la tabla flfiles.Implica carga estática desde esta carpeta.
 # FLFILES_FOLDER=/pineboo/modules/

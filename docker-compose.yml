@@ -4,7 +4,7 @@ services:
   django:
     image: django
     build: .
-    user: yeboyebo
+    user: ${DJANGO_USER:-yeboyebo}
     restart: always
     working_dir: /src/app/
     depends_on:
@@ -20,7 +20,7 @@ services:
       - ./.env
     ports:
       - "${PORT}:8000"
-      - "632:631"
+      - "${PORT2:-632:631}"
     extra_hosts:
       - "dbhost:${DBHOST}"
     volumes:
@@ -39,7 +39,7 @@ services:
     image: redis:latest
     restart: always        
     ports:
-      - '6379:6379'
+      - '${REDIS_PORT:-6379:6379}'
 
 networks:
   app_network:
