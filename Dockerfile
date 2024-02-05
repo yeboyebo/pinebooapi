@@ -13,10 +13,17 @@ RUN mkdir /pineboo/
 RUN mkdir /src/
 RUN mkdir /src/app/
 RUN mkdir /src/app/logs
+RUN mkdir /static/
+RUN mkdir /static/images/
+RUN mkdir /static/images/eventos
+RUN mkdir /static/images/roadbooks
+RUN mkdir /static/images/justificantes
 WORKDIR /src/
 ADD requirements.txt /src/
 RUN /usr/local/bin/python3 -m pip install --upgrade pip
 RUN pip3 install --upgrade setuptools==57.5.0
 RUN pip3 install -r requirements.txt --use-deprecated=legacy-resolver
-RUN pip3 install pineboo==0.99.77
+RUN pip3 install pineboo==0.99.79
+RUN pip3 install gpxpy
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo && echo "yeboyebo:yeboyebo" | chpasswd && adduser yeboyebo sudo
+RUN chmod 777 -R /static/images

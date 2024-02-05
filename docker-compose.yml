@@ -27,6 +27,7 @@ services:
       - .:/src
       - ${PINEBOODIR}:/pineboo/pineboo
       - ${MODULESDIR}:/pineboo/modules
+      - ${IMAGESVOL}:/static/images
       - ~/.config/Eneboo/PinebooSettings.ini:/home/yeboyebo/.config/Eneboo/PinebooSettings.ini
       - /run/cups/cups.sock:/run/cups/cups.sock
       - /etc/cups/cupsd.conf:/etc/cups/cupsd.conf

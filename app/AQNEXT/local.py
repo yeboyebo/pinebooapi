@@ -1,6 +1,6 @@
 import os
 
-allowed = ["localhost", "127.0.0.1", "dbhost"]
+allowed = ["localhost", "127.0.0.1", "dbhost", "172.16.251.128"]
 
 if os.environ.get("WEBHOST") is not None:
     allowed.append(os.environ.get("WEBHOST"))
