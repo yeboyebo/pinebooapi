@@ -57,12 +57,21 @@ class APIQSA:
             raise Exception(e)
         return obj
 
-    def forgot_password(username):
+    def forgot_password(username, params):
         try:
-            obj = qsa.from_project("formAPI").forgot_password(username)
+            obj = qsa.from_project("formAPI").forgot_password(username, params)
         except Exception as e:
             APIQSA.log_exception(e)
+            raise Exception(e)
         return obj
+    
+    def create_user(username, params):
+        try:
+            obj = qsa.from_project("formAPI").create_user(username, params)
+        except Exception as e:
+            APIQSA.log_exception(e)
+            raise Exception(e)
+        return obj    
 
     def check_hashlink(username, hash, type):
         try:

@@ -13,12 +13,25 @@ RUN mkdir /pineboo/
 RUN mkdir /src/
 RUN mkdir /src/app/
 RUN mkdir /src/app/logs
+RUN touch /src/app/logs/yebo.log
+RUN chmod -R a+rw /src
+RUN echo "COMPROBANDO PERMISOS /src"
+RUN ls -la -R /src
 RUN mkdir /static/
 RUN mkdir /static/images/
+RUN chmod -R a+rw /static
 WORKDIR /src/
 ADD requirements.txt /src/
 RUN /usr/local/bin/python3 -m pip install --upgrade pip
 RUN pip3 install --upgrade setuptools==57.5.0
 RUN pip3 install -r requirements.txt --use-deprecated=legacy-resolver
 RUN pip3 install pineboo==0.99.79
-RUN adduser --quiet --disabled-password --gecos '' yeboyebo && echo "yeboyebo:yeboyebo" | chpasswd && adduser yeboyebo sudo
+RUN echo "CREANDO USUARIO 'yeboyebo'"
+RUN adduser --quiet --disabled-password --gecos '' yeboyebo 
+RUN echo "yeboyebo:yeboyebo" | chpasswd 
+RUN adduser yeboyebo sudo
+RUN echo "COMPROBANDO EXISTENCIA USUARIO 'yeboyebo' y permisos"
+RUN cat /etc/passwd | grep yeboyebo
+USER yeboyebo
+RUN whoami
+RUN ls -la -R /src
