@@ -15,7 +15,7 @@ DATABASES = {
         "NAME": os.environ.get("DBNAME"),
         "USER": os.environ.get("DBUSER"),
         "PASSWORD": os.environ.get("DBPASSWORD"),
-        "HOST": "dbhost",
+        "HOST": os.environ.get("DBHOST"),
         "PORT": os.environ.get("DBPORT") or os.environ.get("DBPOST"),
         "ATOMIC_REQUESTS": False,
     }
