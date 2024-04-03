@@ -10,5 +10,5 @@ from YBAQNEXT.settings import *
 from YBAQNEXT.yeboapps import *
 from .local import *
 
-if websocket == "True":
-    INSTALLED_APPS += ('channels', )
+# if websocket == "True":
+#    INSTALLED_APPS += ('channels', )

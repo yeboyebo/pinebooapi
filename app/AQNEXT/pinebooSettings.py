@@ -41,7 +41,7 @@ if len(dirs_list):
 else:
     CONFIG.set_value("StaticLoader/%s/enabled" % (DATABASES["default"]["NAME"]), False)
 
-pineboolib_app.USE_WEBSOCKET_CHANNEL = to_bool(websocket)
+pineboolib_app.USE_WEBSOCKET_CHANNEL = False
 
 CONFIG.set_value("ebcomportamiento/parseProject", False)
 
