@@ -318,33 +318,16 @@ def end_point(request, name=None, action=None):
 
 @csrf_exempt
 def public(request, name=None, action=None):
+    # Faltaría funcionalidad para recpger los parámetros get
     request_params = []
+    if request.method != "GET":
+        raise Exception("Accion no permitida")
+    try:
+        obj = APIQSA.public(name, action, request_params)
+        result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
+    except Exception as e:
+        result = HttpResponse(json.dumps({"error": str(e)}), status=404)
 
+    result['Access-Control-Allow-Origin'] = '*'  
 
-    APIQSA.public(name, action, request_params)
-    result = HttpResponse(json.dumps({}), status=200)
-
-
-    # params = filtersPagination._generaGetParam(request.query_params)
-    # print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE______---PUBLIC0000000", request)
-    # try:
-    #     if request.body:
-    #         try:
-    #             print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE______---PUBLIC1111111", request_params)
-    #             request_params = json.loads(request.body.decode("utf-8"))
-    #         except Exception:
-    #             if request.method == "POST":
-    #                 request_params = request.POST
-
-    #     if request_params:
-    #         print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE______---PUBLIC222222", request_params)
-    #         APIQSA.public(name, action, request_params)
-    #         result = HttpResponse(json.dumps({}), status=200)
-    #     else:
-    #         raise Exception("No hay datos")
-
-    # except Exception as e:
-    #     result = HttpResponse(json.dumps({"error": str(e)}), status=404)
-
-    # result["Access-Control-Allow-Origin"] = "*"
     return result
