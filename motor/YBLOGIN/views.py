@@ -9,6 +9,7 @@ from django.http import HttpResponse
 import json
 from rest_framework.authtoken.models import Token
 from YBUTILS.APIQSA import APIQSA
+from YBUTILS.viewREST import filtersPagination
 
 
 def forbiddenError(request):
@@ -313,4 +314,37 @@ def end_point(request, name=None, action=None):
         result = HttpResponse(json.dumps({"error": str(e)}), status=404)
 
     result["Access-Control-Allow-Origin"] = "*"
+    return result
+
+@csrf_exempt
+def public(request, name=None, action=None):
+    request_params = []
+
+
+    APIQSA.public(name, action, request_params)
+    result = HttpResponse(json.dumps({}), status=200)
+
+
+    # params = filtersPagination._generaGetParam(request.query_params)
+    # print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE______---PUBLIC0000000", request)
+    # try:
+    #     if request.body:
+    #         try:
+    #             print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE______---PUBLIC1111111", request_params)
+    #             request_params = json.loads(request.body.decode("utf-8"))
+    #         except Exception:
+    #             if request.method == "POST":
+    #                 request_params = request.POST
+
+    #     if request_params:
+    #         print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE______---PUBLIC222222", request_params)
+    #         APIQSA.public(name, action, request_params)
+    #         result = HttpResponse(json.dumps({}), status=200)
+    #     else:
+    #         raise Exception("No hay datos")
+
+    # except Exception as e:
+    #     result = HttpResponse(json.dumps({"error": str(e)}), status=404)
+
+    # result["Access-Control-Allow-Origin"] = "*"
     return result
