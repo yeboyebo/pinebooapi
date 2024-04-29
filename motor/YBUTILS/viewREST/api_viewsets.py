@@ -36,7 +36,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
     def dameuseracl(self, request):
         params = None
         if request.method in ["POST", "DELETE", "PUT"]:
-            print("pasa")
+            # print("pasa")
             try:
                 params = {}
                 # print(request.body)
@@ -53,16 +53,15 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             params = filtersPagination._generaGetParam(request.query_params)
         try:
             username = request.user.username
-            print("____________")
-            print(username)
-            print(params)
+            # print("____________")
+            # print(username)
+            # print(params)
             obj = APIQSA.getuseracl('post', params, username)
             result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
             result['Access-Control-Allow-Origin'] = '*'
             return result
 
         except Exception as e:
-            print("______")
             print(bcolors.FAIL + "Excepcion " + str(e) + bcolors.ENDC)
 
             ex_type, ex_value, ex_traceback = sys.exc_info()
@@ -90,7 +89,7 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             return resp
 
     def optionsFun(self, request, modulo=None, controlador=None, accion=None, pk=None):
-        print(request.body)
+        # print(request.body)
         resp = HttpResponse("{}", status=200, content_type="application/json")
         resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
@@ -192,9 +191,9 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             return resp
 
     def get_response(self, obj, method):
-        print("entra?")
+        # print("entra?")
         if isinstance(obj, (Response, HttpResponse)):
-            print("viene por aqui???")
+            # print("viene por aqui???")
             return obj
         elif type(obj) == dict and "attachments" in obj:
             fichero = obj["attachments"][0]
