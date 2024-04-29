@@ -97,9 +97,9 @@ class APIQSA:
             raise Exception(e)
         return obj
     
-    def public(name, action, params={}):
+    def public(hash, action, params={}):
         try:
-            obj = qsa.from_project("formAPI").public(name, action, params)
+            obj = qsa.from_project("formAPI").public(hash, action, params)
         except Exception as e:
             APIQSA.log_exception(e)
             raise Exception(e)

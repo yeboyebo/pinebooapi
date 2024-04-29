@@ -317,13 +317,13 @@ def end_point(request, name=None, action=None):
     return result
 
 @csrf_exempt
-def public(request, name=None, action=None):
+def public(request, hash=None, action=None):
     # Faltaría funcionalidad para recpger los parámetros get
     request_params = []
     if request.method != "GET":
         raise Exception("Accion no permitida")
     try:
-        obj = APIQSA.public(name, action, request_params)
+        obj = APIQSA.public(hash, action, request_params)
         result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
     except Exception as e:
         result = HttpResponse(json.dumps({"error": str(e)}), status=404)

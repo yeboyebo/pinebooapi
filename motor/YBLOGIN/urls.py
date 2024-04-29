@@ -26,8 +26,8 @@ urlpatterns = [
     path("getToken", views.token_auth, name="getToken"),
     path("end_point/<str:name>/<str:action>", views.end_point, name="end_point"),
     path("end_point/<str:name>/<str:action>/", views.end_point, name="end_point"),
-    path("public/<str:name>/<str:action>", views.public, name="public"),
-    path("public/<str:name>/<str:action>/", views.public, name="public"),
+    path("public/<str:hash>/<str:action>", views.public, name="public"),
+    path("public/<str:hash>/<str:action>/", views.public, name="public"),
 
 ]
 # url=r'(?P<modulo>\w+)/(?P<pk>\w+)/(?P<accion>\w+)',
