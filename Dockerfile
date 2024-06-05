@@ -17,5 +17,6 @@ WORKDIR /src/
 ADD requirements.txt /src/
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
-RUN pip3 install pineboo==0.77.20.7
+RUN pip3 install pineboo==0.77.37
+RUN pip3 install openpyxl
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo && echo "yeboyebo:yeboyebo" | chpasswd && adduser yeboyebo sudo

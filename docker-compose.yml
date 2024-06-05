@@ -1,16 +1,12 @@
 version: '3'
 
 services:
-  django:
-    image: django
+  dailyjob_server:
+    image: dailyjob_server
     build: .
     user: yeboyebo
     restart: always
     working_dir: /src/app/
-    depends_on:
-      - redis
-    links:
-      - redis
     environment:
       - TZ=Europe/Amsterdam
       - LC_ALL=C.UTF-8
@@ -20,24 +16,18 @@ services:
       - ./.env
     ports:
       - "${PORT}:8000"
-      - "632:631"
     extra_hosts:
       - "dbhost:${DBHOST}"
     volumes:
       - .:/src
       - ${PINEBOODIR}:/pineboo/pineboo
       - ${MODULESDIR}:/pineboo/modules
+      - ${IMAGESVOL}:/static/images
       - /run/cups/cups.sock:/run/cups/cups.sock
       - /etc/cups/cupsd.conf:/etc/cups/cupsd.conf
     command: python3 manage.py runserver 0.0.0.0:8000 --noreload
     networks:
       app_network:
-
-  redis:
-    image: redis:latest
-    restart: always        
-    ports:
-      - '6379:6379'
 
 networks:
   app_network:
