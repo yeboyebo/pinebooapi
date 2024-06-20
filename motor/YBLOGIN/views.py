@@ -319,11 +319,20 @@ def end_point(request, name=None, action=None):
 @csrf_exempt
 def public(request, hash=None, action=None):
     # Faltaría funcionalidad para recpger los parámetros get
-    request_params = []
-    if request.method != "GET":
+    method = request.method
+    # print("ESTOY EN PUBLIC CON EL METODO: ", method)    
+    if method not in ["GET","POST"]:
         raise Exception("Accion no permitida")
     try:
-        obj = APIQSA.public(hash, action, request_params)
+        request_params = json.loads(request.body.decode("utf-8"))
+    except Exception:
+        if method == "POST":
+            request_params = request.POST
+        if method == "GET":
+            request_params = request.GET
+    params = filtersPagination._generaGetParam(request_params)    
+    try:
+        obj = APIQSA.public(method, hash, action, params)
         result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
     except Exception as e:
         result = HttpResponse(json.dumps({"error": str(e)}), status=404)
