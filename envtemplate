@@ -50,3 +50,5 @@ WEBSOCKET=True
 # USE_THREADS_ON_QSA_PARSER=True
 # Habilita alter table si tiene que regenerar tablas.
 # ALLOW_ALTER_TABLE=True
+# Usa modulos python alojados en esta carpeta
+# EXTERNAL_MODULES=/ruta/a/carpeta/

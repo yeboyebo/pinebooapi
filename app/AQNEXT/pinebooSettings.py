@@ -6,7 +6,8 @@ from pineboolib.loader.projectconfig import ProjectConfig
 from pineboolib.core.settings import CONFIG
 from pineboolib.loader import main
 from pineboolib.application.parsers import parser_qsa as qsaparser
-
+import sys
+sys.path.insert(0, "/external")
 
 def nombre_session():
     return get_current_user()

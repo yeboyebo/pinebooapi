@@ -20,6 +20,7 @@ RUN ls -la -R /src
 RUN mkdir /static/
 RUN mkdir /static/images/
 RUN chmod -R a+rw /static
+RUN mkdir /external/
 WORKDIR /src/
 ADD requirements.txt /src/
 RUN /usr/local/bin/python3 -m pip install --upgrade pip
