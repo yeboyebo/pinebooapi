@@ -26,7 +26,7 @@ ADD requirements.txt /src/
 RUN /usr/local/bin/python3 -m pip install --upgrade pip
 RUN pip3 install --upgrade setuptools==57.5.0
 RUN pip3 install -r requirements.txt --use-deprecated=legacy-resolver
-RUN pip3 install pineboo==0.99.84.7
+RUN pip3 install pineboo==0.99.85
 RUN echo "CREANDO USUARIO 'yeboyebo'"
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo 
 RUN echo "yeboyebo:yeboyebo" | chpasswd 
