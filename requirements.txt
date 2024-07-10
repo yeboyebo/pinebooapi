@@ -68,7 +68,7 @@ pg8000==1.13.2
 pika==0.11.2
 pkginfo==1.5.0.1
 pluggy==0.13.1
-psycopg2==2.8.3
+psycopg2==2.9.9
 py==1.8.0
 pyaes==1.6.1
 pyasn1==0.4.8
