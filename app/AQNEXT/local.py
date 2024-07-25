@@ -28,6 +28,10 @@ if static_loaders_dirs:
         dirs_list.append(True)
         dirs_list.append(pdir)
 
+if os.environ.get("EXTERNAL_MODULES") is not None:
+    dirs_list.append(True)
+    dirs_list.append("/external")
+
 
 temp_dir = os.environ.get("TEMPDIR") or ""
 flfiles = os.environ.get("FLFILES_FOLDER") or ""
