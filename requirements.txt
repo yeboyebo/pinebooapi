@@ -33,6 +33,7 @@ easygui==0.98.1
 ecdsa==0.13
 entrypoints==0.3
 et-xmlfile==1.1.0 #1.0.1
+Faker==28.0.0
 gitdb2==2.0.3
 GitPython==2.1.1
 gunicorn==19.6.0
