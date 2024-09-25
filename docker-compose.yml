@@ -7,10 +7,6 @@ services:
     user: ${DJANGO_USER:-yeboyebo}
     restart: always
     working_dir: /src/app/
-    depends_on:
-      - redis
-    links:
-      - redis
     environment:
       - TZ=Europe/Amsterdam
       - LC_ALL=C.UTF-8
@@ -20,7 +16,6 @@ services:
       - ./.env
     ports:
       - "${PORT}:8000"
-      - "${PORT2:-632:631}"
     extra_hosts:
       - "dbhost:${DBHOST}"
     volumes:
@@ -34,12 +29,6 @@ services:
     command: python3 manage.py runserver 0.0.0.0:8000 --noreload
     networks:
       app_network:
-
-  redis:
-    image: redis:latest
-    restart: always        
-    ports:
-      - '${REDIS_PORT:-6379:6379}'
 
 networks:
   app_network:

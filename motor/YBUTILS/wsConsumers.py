@@ -29,8 +29,8 @@ class ChatConsumer(WebsocketConsumer):
 class JSONConsumer(JsonWebsocketConsumer):
 
     def connect(self):
-        # print("_________________________")
-        # print(self.scope["user"])
+        print("_________________________")
+        print(self.scope["user"])
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         if 'user_name' in self.scope['url_route']['kwargs']:
             self.room_name = self.room_name + self.scope['url_route']['kwargs']['user_name']
