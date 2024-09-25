@@ -1,6 +1,6 @@
 import os
 
-allowed = ["localhost", "127.0.0.1", "dbhost", "172.16.251.128"]
+allowed = ["localhost", "127.0.0.1", "dbhost", "172.16.251.128", "141.95.96.25", "api.atalayaexperiences.com", "api2.atalayaexperiences.com"]
 
 if os.environ.get("WEBHOST") is not None:
     allowed_lists = os.environ.get("WEBHOST").split(",")
@@ -15,7 +15,7 @@ DATABASES = {
         "NAME": os.environ.get("DBNAME"),
         "USER": os.environ.get("DBUSER"),
         "PASSWORD": os.environ.get("DBPASSWORD"),
-        "HOST": "dbhost",
+        "HOST": os.environ.get("DBHOST"),
         "PORT": os.environ.get("DBPORT") or os.environ.get("DBPOST"),
         "ATOMIC_REQUESTS": False,
     }

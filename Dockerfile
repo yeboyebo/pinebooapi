@@ -4,7 +4,7 @@ MAINTAINER Javier Cortés <javier@yeboyebo.es>
 
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update && apt-get install -y apt-utils build-essential vim tzdata libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev freetds-dev libgl1 libegl1 libxkbcommon-x11-0 libjpeg-dev libdbus-1-3 xcb libxcb-cursor0
+RUN apt-get update && apt-get install -y apt-utils build-essential nano vim tzdata libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev freetds-dev libgl1 libegl1 libxkbcommon-x11-0 libjpeg-dev libdbus-1-3 xcb libxcb-cursor0
 
 ENV TZ=Europe/Madrid
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -19,17 +19,22 @@ RUN mkdir /static/images/eventos
 RUN mkdir /static/images/roadbooks
 RUN mkdir /static/images/justificantes
 RUN touch /src/app/logs/yebo.log
-RUN chmod -R a+rw /src
+# RUN chmod -R a+rw /src
 RUN echo "COMPROBANDO PERMISOS /src"
 RUN ls -la -R /src
 RUN chmod -R a+rw /static
 WORKDIR /src/
 ADD requirements.txt /src/
+COPY app /src/app
+COPY motor /src/motor
+COPY pineboo /src/pineboo
+RUN chmod -R 777 /src
 RUN /usr/local/bin/python3 -m pip install --upgrade pip
 RUN pip3 install --upgrade setuptools==57.5.0
 RUN pip3 install -r requirements.txt --use-deprecated=legacy-resolver
-RUN pip3 install pineboo==0.99.79
+RUN pip3 install pineboo==0.99.87.5
 RUN pip3 install gpxpy
+RUN pip3 install unidecode
 RUN chmod 777 -R /static/images
 RUN echo "CREANDO USUARIO 'yeboyebo'"
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo 
