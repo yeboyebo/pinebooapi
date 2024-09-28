@@ -12,3 +12,5 @@ from .local import *
 
 # if websocket == "True":
 #    INSTALLED_APPS += ('channels', )
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = None
