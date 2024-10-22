@@ -7,7 +7,9 @@ from pineboolib.core.settings import CONFIG
 from pineboolib.loader import main
 from pineboolib.application.parsers import parser_qsa as qsaparser
 import sys
-sys.path.insert(0, "/external")
+
+if external_modules:
+    sys.path.insert(0, "/external")
 
 def nombre_session():
     return get_current_user()
@@ -54,6 +56,7 @@ qsaparser.STRICT_MODE = to_bool(qsa_use_strict_mode)
 
 pineboolib_app.ALLOW_ALTER_TABLE=to_bool(allow_alter_table)
 pineboolib_app.PARSE_PROJECT_ON_INIT = to_bool(parse_project_on_init)
+pineboolib_app.PROJECT_NAME = project_name
 
 pineboolib_app.PROJECT.USE_FLFILES_FOLDER = flfiles
 pineboolib_app.PROJECT.db_admin_mode = to_bool(dbadmin_enabled)

@@ -28,7 +28,10 @@ if static_loaders_dirs:
         dirs_list.append(True)
         dirs_list.append(pdir)
 
-if os.environ.get("EXTERNAL_MODULES") is not None:
+
+external_modules = os.environ.get("EXTERNAL_MODULES") or False
+
+if external_modules:
     dirs_list.append(True)
     dirs_list.append("/external")
 
@@ -47,5 +50,7 @@ show_cursor_events = os.environ.get("SHOW_CURSOR_EVENTS") or False
 parse_project_on_init = os.environ.get("PARSE_ALL_PROJECT") or False
 use_threads_parser_qsa = os.environ.get("USE_THREADS_ON_QSA_PARSER") or False
 allow_alter_table = os.environ.get("ALLOW_ALTER_TABLE") or False
+project_name = os.environ.get("PROJECT_NAME") or None
+
 
 WSGI_APPLICATION = "AQNEXT.wsgi.application"
