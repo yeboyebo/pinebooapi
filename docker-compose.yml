@@ -25,8 +25,8 @@ services:
       - ~/.config/Eneboo/PinebooSettings.ini:/home/yeboyebo/.config/Eneboo/PinebooSettings.ini
       - /run/cups/cups.sock:/run/cups/cups.sock
       - /etc/cups/cupsd.conf:/etc/cups/cupsd.conf
-      - ${IMAGESVOL:-/}:/static/images
-      - ${EXTERNAL_MODULES:-/}:/external
+      - ${IMAGESVOL:-/tmp}:/static/images
+      - ${EXTERNAL_MODULES:-/tmp}:/external
     command: python3 manage.py runserver 0.0.0.0:8000 --noreload
     networks:
       app_network:
