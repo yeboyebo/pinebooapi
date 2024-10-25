@@ -52,3 +52,6 @@ WEBSOCKET=True
 # ALLOW_ALTER_TABLE=True
 # Usa modulos python alojados en esta carpeta
 # EXTERNAL_MODULES=/ruta/a/carpeta/
+# Nombre del proyecto.
+# PROJECT_NAME=nombre_proyecto
+

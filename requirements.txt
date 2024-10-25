@@ -33,7 +33,7 @@ easygui==0.98.1
 ecdsa==0.13
 entrypoints==0.3
 et-xmlfile==1.1.0 #1.0.1
-# flask==3.0.3
+Faker==28.0.0
 gitdb2==2.0.3
 GitPython==2.1.1
 google-api-python-client==2.143.0
@@ -80,6 +80,7 @@ pyasn1-modules==0.4.0 #0.2.7
 pycodestyle==2.5.0
 pycparser==2.22 #2.19
 pycryptodome==3.20.0 #3.6.6
+pydantic==2.9.1
 pydocstyle==5.0.1
 PyExecJS2==1.6.1 #PyExecJS==1.1.0
 pyflakes==2.1.1
@@ -97,6 +98,7 @@ PyYAML==6.0.1 #5.2
 readme-renderer==24.0
 regex==2024.5.15 #2022.7.9
 requests==2.32.3 #2.20.0
+# requests==2.28.1 # fix error falta chunk!
 requests-toolbelt==0.9.1
 scramp==1.1.0
 SecretStorage==3.1.1

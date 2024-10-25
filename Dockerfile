@@ -1,8 +1,8 @@
 FROM python:3.12.4-slim
 
-MAINTAINER Javier Cortés <javier@yeboyebo.es>
+# MAINTAINER Javier Cortés <javier@yeboyebo.es>
 
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update && apt-get install -y apt-utils build-essential vim tzdata libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev freetds-dev libgl1 libegl1 libxkbcommon-x11-0 libjpeg-dev libdbus-1-3 xcb libxcb-cursor0 libpq-dev libglib2.0-0
 RUN apt-get install -y python3-anyjson
@@ -27,7 +27,7 @@ ADD requirements.txt /src/
 RUN /usr/local/bin/python3 -m pip install --upgrade pip
 RUN pip3 install --upgrade setuptools==57.5.0
 RUN pip3 install -r requirements.txt --use-deprecated=legacy-resolver
-RUN pip3 install pineboo==0.99.86
+RUN pip3 install pineboo==0.99.88.2
 RUN echo "CREANDO USUARIO 'yeboyebo'"
 RUN adduser --quiet --disabled-password --gecos '' yeboyebo 
 RUN echo "yeboyebo:yeboyebo" | chpasswd 
