@@ -38,6 +38,7 @@ if external_modules:
 
 temp_dir = os.environ.get("TEMPDIR") or ""
 flfiles = os.environ.get("FLFILES_FOLDER") or ""
+update_flfiles_from_flfolder = os.environ.get("UPDATE_FLFILES_FROM_FLFOLDER") or False and flfiles
 dbadmin_enabled = os.environ.get("DBADMIN") or False
 clear_python_cache = os.environ.get("CLEAR_PYTHON_CACHE") or False
 delete_all_cache = os.environ.get("CLEAR_ALL_CACHE") or False

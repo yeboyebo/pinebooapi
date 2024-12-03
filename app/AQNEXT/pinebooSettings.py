@@ -60,6 +60,7 @@ pineboolib_app.PROJECT_NAME = project_name
 pineboolib_app.EXTERNAL_FOLDER = "/external" if external_modules else None
 
 pineboolib_app.PROJECT.USE_FLFILES_FOLDER = flfiles
+pineboolib_app.UPDATE_FLFILES_FROM_FLFOLDER = update_flfiles_from_flfolder
 pineboolib_app.PROJECT.db_admin_mode = to_bool(dbadmin_enabled)
 pineboolib_app.PROJECT.no_python_cache = to_bool(clear_python_cache)
 pineboolib_app.PROJECT.delete_cache = to_bool(delete_all_cache)
