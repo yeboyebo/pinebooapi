@@ -6,6 +6,8 @@ from pineboolib.loader.projectconfig import ProjectConfig
 from pineboolib.core.settings import CONFIG
 from pineboolib.loader import main
 from pineboolib.application.parsers import parser_qsa as qsaparser
+from pineboolib.fllegacy.systype import AQTimer
+from pineboolib.core import decorators 
 import sys
 
 if external_modules:
@@ -67,7 +69,7 @@ pineboolib_app.PROJECT.delete_cache = to_bool(delete_all_cache)
 pineboolib_app.PROJECT.delete_base_cache = to_bool(delete_base_cache)
 
 
-pineboolib_app.PROJECT.setDebugLevel(200)
+pineboolib_app.PROJECT.setDebugLevel(1)
 pineboolib_app.PROJECT.conn_manager.set_max_connections_limit(100)
 
 pineboolib_app.USE_ALTER_TABLE_LEGACY = not to_bool(use_alembic_as_altertable)
@@ -76,8 +78,13 @@ pineboolib_app.SHOW_CURSOR_EVENTS = to_bool(show_cursor_events)
 
 main.startup_framework(SQL_CONN)
 
+
 pineboolib_app.PROJECT.conn_manager.REMOVE_CONNECTIONS_AFTER_ATOMIC = to_bool(
     remove_conn_after_atomic
 )
 
+pineboolib_app.PROJECT.call("formQUEUE_EVENTS.servicioTareasPendientesInit", [], show_exceptions=False) 
 pineboolib_app.PROJECT.call("formCRON.init_cron", [], None, False)
+print("FIN")
+
+
