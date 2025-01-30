@@ -52,6 +52,7 @@ parse_project_on_init = os.environ.get("PARSE_ALL_PROJECT") or False
 use_threads_parser_qsa = os.environ.get("USE_THREADS_ON_QSA_PARSER") or False
 allow_alter_table = os.environ.get("ALLOW_ALTER_TABLE") or False
 project_name = os.environ.get("PROJECT_NAME") or None
+debug_level = os.environ.get("DEBUG_LEVEL") or 0
 
 
 WSGI_APPLICATION = "AQNEXT.wsgi.application"

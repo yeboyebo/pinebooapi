@@ -67,9 +67,7 @@ pineboolib_app.PROJECT.db_admin_mode = to_bool(dbadmin_enabled)
 pineboolib_app.PROJECT.no_python_cache = to_bool(clear_python_cache)
 pineboolib_app.PROJECT.delete_cache = to_bool(delete_all_cache)
 pineboolib_app.PROJECT.delete_base_cache = to_bool(delete_base_cache)
-
-
-pineboolib_app.PROJECT.setDebugLevel(1)
+pineboolib_app.FRAMEWORK_DEBUG_LEVEL = 30 - (int(debug_level) * 5)
 pineboolib_app.PROJECT.conn_manager.set_max_connections_limit(100)
 
 pineboolib_app.USE_ALTER_TABLE_LEGACY = not to_bool(use_alembic_as_altertable)
