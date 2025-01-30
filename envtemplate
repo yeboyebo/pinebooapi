@@ -55,4 +55,5 @@ WEBSOCKET=True
 # Nombre del proyecto.
 # PROJECT_NAME=nombre_proyecto
 # UPDATE_FLFILES_FROM_FLFOLDER = True # Actualiza tabla flfiles con el contenido de flfilesfolder.
+# DEBUG_LEVEL=0 (-3...6) Por defecto 2
 
