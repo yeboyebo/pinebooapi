@@ -6,9 +6,10 @@ from pineboolib.loader.projectconfig import ProjectConfig
 from pineboolib.core.settings import CONFIG
 from pineboolib.loader import main
 from pineboolib.application.parsers import parser_qsa as qsaparser
-from pineboolib.fllegacy.systype import AQTimer
-from pineboolib.core import decorators 
+from pineboolib.core import garbage_collector as gc
+from pineboolib import core
 import sys
+import threading
 
 if external_modules:
     sys.path.insert(0, "/external")
@@ -75,14 +76,20 @@ pineboolib_app.ENABLE_ACLS = to_bool(enable_acls)
 pineboolib_app.SHOW_CURSOR_EVENTS = to_bool(show_cursor_events)
 
 main.startup_framework(SQL_CONN)
-
+if not disable_memory_leaks:
+    print("Memory leaks check enabled")
+    core.DISABLE_CHECK_MEMORY_LEAKS = False
+    timer_gc = threading.Timer(interval=0,function=gc.periodic_gc, args=[gb_seconds,])
+    timer_gc.start()
 
 pineboolib_app.PROJECT.conn_manager.REMOVE_CONNECTIONS_AFTER_ATOMIC = to_bool(
     remove_conn_after_atomic
 )
 
+
+
 pineboolib_app.PROJECT.call("formQUEUE_EVENTS.servicioTareasPendientesInit", [], show_exceptions=False) 
 pineboolib_app.PROJECT.call("formCRON.init_cron", [], None, False)
-print("FIN")
+
 
 

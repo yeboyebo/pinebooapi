@@ -53,6 +53,8 @@ use_threads_parser_qsa = os.environ.get("USE_THREADS_ON_QSA_PARSER") or False
 allow_alter_table = os.environ.get("ALLOW_ALTER_TABLE") or False
 project_name = os.environ.get("PROJECT_NAME") or None
 debug_level = os.environ.get("DEBUG_LEVEL") or 2
+gb_seconds = int(os.environ.get("GARBAGE_COLLECTOR_SECONDS") or 300)
+disable_memory_leaks = os.environ.get("DISABLE_CHECK_MEMORY_LEAKS") or False
 
 
 WSGI_APPLICATION = "AQNEXT.wsgi.application"
