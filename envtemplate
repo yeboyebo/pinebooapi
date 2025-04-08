@@ -58,3 +58,4 @@ WEBSOCKET=True
 # DEBUG_LEVEL=0 (-3...6) Por defecto 2
 # GARBAGE_COLLECTOR_SECONDS=30 # Segundos de intervalo para que el GB revise los hilos no usados.
 # DISABLE_CHECK_MEMORY_LEAKS=True # Deshabilita el chequeo de memoryleaks
+# POOL_CONNECTION_LIMIT=100 # Limite de conexiones usadas el la conexión de sqlAlchemy
