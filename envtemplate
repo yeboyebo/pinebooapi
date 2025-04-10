@@ -22,7 +22,7 @@ TEMPDIR=/pineboo/pineboo/tempdata
 WEBSOCKET=True
 
 
-# Usa una carpeta para cargar los ficheros, en puesto de la tabla flfiles.Implica carga estática desde esta carpeta.
+# Usa una carpeta para cargar los ficheros, en puesto de la tabla flfiles.Implica carga estática desde esta carpeta, si el env no es producción.
 # FLFILES_FOLDER=/pineboo/modules/
 # Usa una carpeta para sobrecargar los ficheros de flfiles en caché.
 # STATIC_LOADER_DIRS=/pineboo/static/
@@ -59,3 +59,4 @@ WEBSOCKET=True
 # GARBAGE_COLLECTOR_SECONDS=30 # Segundos de intervalo para que el GB revise los hilos no usados.
 # DISABLE_CHECK_MEMORY_LEAKS=True # Deshabilita el chequeo de memoryleaks
 # POOL_CONNECTION_LIMIT=100 # Limite de conexiones usadas el la conexión de sqlAlchemy. Default 100
+# ENV_PRODUCTION=False # Incica si el entorno está en ENV de producción.

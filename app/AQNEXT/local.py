@@ -57,4 +57,7 @@ gb_seconds = int(os.environ.get("GARBAGE_COLLECTOR_SECONDS") or 300)
 disable_memory_leaks = os.environ.get("DISABLE_CHECK_MEMORY_LEAKS") or False
 pool_connection_limit = int(os.environ.get("POOL_CONNECTION_LIMIT") or 100)
 
+
+# enviroment produccion.
+env_production = bool(os.environ.get("ENV_PRODUCTION") == "True" or False)
 WSGI_APPLICATION = "AQNEXT.wsgi.application"

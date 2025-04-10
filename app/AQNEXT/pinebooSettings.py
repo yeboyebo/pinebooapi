@@ -51,6 +51,9 @@ pineboolib_app.USE_WEBSOCKET_CHANNEL = False
 
 CONFIG.set_value("ebcomportamiento/parseProject", False)
 
+if env_production:
+    print("ENVIROMENT PRODUCTION ENABLED")
+
 if temp_dir:
     pineboolib_app.PROJECT.tmpdir = temp_dir
 
@@ -63,6 +66,7 @@ pineboolib_app.PROJECT_NAME = project_name
 pineboolib_app.EXTERNAL_FOLDER = "/external" if external_modules else None
 
 pineboolib_app.PROJECT.USE_FLFILES_FOLDER = flfiles
+pineboolib_app.USE_FLFILES_FOLDER_AS_STATIC_LOAD = not env_production
 pineboolib_app.UPDATE_FLFILES_FROM_FLFOLDER = update_flfiles_from_flfolder
 pineboolib_app.PROJECT.db_admin_mode = to_bool(dbadmin_enabled)
 pineboolib_app.PROJECT.no_python_cache = to_bool(clear_python_cache)
