@@ -24,7 +24,7 @@ RUN chmod -R a+rw /static
 RUN mkdir /external/
 WORKDIR /src/
 ADD requirements.txt /src/
-RUN /usr/local/bin/python3 -m pip install --upgrade pip
+RUN /usr/local/bin/python3 -m pip install --upgrade pip==25.0.1
 RUN pip3 install --upgrade setuptools
 RUN pip3 install -r requirements.txt --use-deprecated=legacy-resolver
 RUN pip3 install pineboo==0.99.91.36
