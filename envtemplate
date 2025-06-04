@@ -57,6 +57,6 @@ WEBSOCKET=True
 # UPDATE_FLFILES_FROM_FLFOLDER = True # Actualiza tabla flfiles con el contenido de flfilesfolder.
 # DEBUG_LEVEL=0 (-3...6) Por defecto 2
 # GARBAGE_COLLECTOR_SECONDS=30 # Segundos de intervalo para que el GB revise los hilos no usados.
-# DISABLE_CHECK_MEMORY_LEAKS=True # Deshabilita el chequeo de memoryleaks
+# DISABLE_CHECK_MEMORY_LEAKS=True # Deshabilita el chequeo de memoryleaks, por defecto TRUE
 # POOL_CONNECTION_LIMIT=100 # Limite de conexiones usadas el la conexión de sqlAlchemy. Default 100
 # ENV_PRODUCTION=False # Incica si el entorno está en ENV de producción.

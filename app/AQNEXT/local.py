@@ -54,7 +54,7 @@ allow_alter_table = os.environ.get("ALLOW_ALTER_TABLE") or False
 project_name = os.environ.get("PROJECT_NAME") or None
 debug_level = os.environ.get("DEBUG_LEVEL") or 2
 gb_seconds = int(os.environ.get("GARBAGE_COLLECTOR_SECONDS") or 300)
-disable_memory_leaks = os.environ.get("DISABLE_CHECK_MEMORY_LEAKS") or False
+disable_memory_leaks = os.environ.get("DISABLE_CHECK_MEMORY_LEAKS") or True
 pool_connection_limit = int(os.environ.get("POOL_CONNECTION_LIMIT") or 100)
 
 
