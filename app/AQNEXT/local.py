@@ -9,6 +9,11 @@ if os.environ.get("WEBHOST") is not None:
 
 ALLOWED_HOSTS = tuple(allowed)
 
+# Depuración de Django. Por defecto True para no cambiar a los clientes existentes;
+# en producción poner DJANGO_DEBUG=False (con DEBUG, cada error devuelve la traza completa).
+DEBUG = os.environ.get("DJANGO_DEBUG", "True").lower() in ("1", "true")
+TEMPLATE_DEBUG = DEBUG
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",

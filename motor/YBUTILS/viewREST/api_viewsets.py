@@ -1,6 +1,10 @@
 import json
+import os
 import sys
 import traceback
+
+# Imprime los parámetros completos de cada petición (incluidos trackpoints). Desactivable en producción.
+LOG_REQUEST_PARAMS = os.environ.get("LOG_REQUEST_PARAMS", "True").lower() in ("1", "true")
 
 from rest_framework import viewsets
 from rest_framework.views import APIView
@@ -94,7 +98,9 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
         resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
         resp["Access-Control-Allow-Credentials"] = True
-        resp["Access-Control-Allow-Methods"] = "GET,POST,PATCH,DELETE"
+        resp["Access-Control-Allow-Methods"] = "GET,POST,PUT,PATCH,DELETE"
+        # Sin Max-Age el navegador repite el preflight casi en cada petición.
+        resp["Access-Control-Max-Age"] = os.environ.get("CORS_MAX_AGE", "7200")
 
         return resp
 
@@ -151,7 +157,8 @@ class YBControllerViewSet(viewsets.ViewSet, APIView):
             #     obj = APIQSA.entry_point(method, modulo, username, params, accion)
             #     # result = HttpResponse(json.dumps(obj), status=200, content_type='application/json')
             #     result = self.get_response(obj)
-            print(method, modulo, username, params, accion)
+            if LOG_REQUEST_PARAMS:
+                print(method, modulo, username, params, accion)
             obj = APIQSA.entry_point(method, modulo, username, params, accion)
             result = self.get_response(obj, method)
 

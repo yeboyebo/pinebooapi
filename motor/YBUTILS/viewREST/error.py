@@ -12,7 +12,6 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from YBUTILS import mylogging as log
-from YBUTILS.viewREST import cacheController
 """
     Definicion de excepciones y tratamiento de errores comunes
 """
@@ -56,24 +55,22 @@ def YB_exception_handler(exc, context):
         miresp['msg'] = [_('Error en los datos recibidos. Revise mensajes adicionales.')]
         miresp['data'] = exc.detail
     elif isinstance(exc, PermissionDenied) or isinstance(exc, NotAuthenticated) or isinstance(exc, AuthenticationFailed):
-        return HttpResponseRedirect("/")
-        # Cuando falle el login por no tener permisos o no estar autenficiado redirigira a /
-        # raise djPermissionDenied
+        # Antes redirigía a "/" (302), inútil para una API consumida por SPAs y apps.
+        # Devolvemos el 401/403 estándar de DRF en JSON para que el cliente sepa el motivo.
+        response = exception_handler(exc, context)
+        if response is not None:
+            response.data = {'tipo': 1, 'msg': [response.data.get('detail', None)]}
+            response['Access-Control-Allow-Origin'] = '*'
+            return response
     else:
-        cacheError = cacheController.getSessionVariable("ErrorHandler")
-        if cacheError:
-            response = exception_handler(exc, context)
-            print(context['view']._prefix)
-            errorMsg = YB_error_handler(cacheError, exc)
-            cacheController.dropSessionVariable("ErrorHandler")
-        else:
-            # Comportamiento por defecto
-            response = exception_handler(exc, context)
+        # Comportamiento por defecto
+        response = exception_handler(exc, context)
         if not(response is None):
             # Pasamos a nuestro estandar
             miresp['tipo'] = 1
             miresp['msg'] = [response.data.get('detail', None)]
             response.data = miresp
+            response['Access-Control-Allow-Origin'] = '*'
             return response
         else:
             # Tratamiento de excepciones propias y no controladas por API
@@ -87,12 +84,14 @@ def YB_exception_handler(exc, context):
                 # set_rollback()
                 miresp['tipo'] = 4
                 miresp['msg'] = [force_text(errorMsg)]
-    return Response(data=miresp, status=code)
+    response = Response(data=miresp, status=code)
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
 
 
 class excepcionAplicacion(Exception):
     def __str__(self):
-        return six.text_type(self.args.join(" "))
+        return six.text_type(" ".join(map(str, self.args)))
 
 
 class excepcionAplicacionRollBack(excepcionAplicacion):

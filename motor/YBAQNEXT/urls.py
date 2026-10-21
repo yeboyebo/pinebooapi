@@ -4,6 +4,7 @@ import os
 
 from django.conf import settings
 from django.contrib import admin
+from django.http import HttpResponse
 from django.urls import include, path
 
 from YBUTILS.viewREST import routers
@@ -35,6 +36,9 @@ for app in settings.API_APPS:
 # )
 
 urlpatterns.append(path("admin/", admin.site.urls))
+# Comprobación de salud para Kubernetes: no toca la BD ni pineboo (si el worker responde, la app
+# ya ha cargado). Va antes de YBLOGIN.urls, cuya "/" redirige al login.
+urlpatterns.append(path("healthz", lambda request: HttpResponse("ok", content_type="text/plain"), name="healthz"))
 urlpatterns.append(path("", include("YBLOGIN.urls")))
 
 urlpatterns.append(path("", raiz, name="root")

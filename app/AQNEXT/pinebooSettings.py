@@ -10,6 +10,25 @@ from pineboolib.core import garbage_collector as gc
 from pineboolib import core
 import sys
 import threading
+from pineboolib.application.database import pnconnectionmanager
+
+
+def _enumerate_seguro(self):
+    """Igual que PNConnectionManager.enumerate pero iterando sobre una copia.
+
+    El original recorre connections_dict mientras otros hilos añaden o quitan conexiones
+    ("dictionary changed size during iteration" con varios hilos sirviendo peticiones).
+    """
+    dict_ = {}
+    id_thread = str(threading.current_thread().ident)
+    for key, value in list(self.connections_dict.items()):
+        connection_data = key.split("|")
+        if connection_data[0] == id_thread:
+            dict_[connection_data[1]] = value
+    return dict_
+
+
+pnconnectionmanager.PNConnectionManager.enumerate = _enumerate_seguro
 
 if external_modules:
     sys.path.insert(0, "/external")

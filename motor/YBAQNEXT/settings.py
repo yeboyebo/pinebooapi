@@ -134,10 +134,12 @@ DEFAULT_FROM_EMAIL = True
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'YBUTILS.viewREST.error.YB_exception_handler',
     'NON_FIELD_ERRORS_KEY': '__ALL__',
+    # Token primero: la cabecera WWW-Authenticate del 401 la decide la primera clase,
+    # y con Basic el navegador muestra su diálogo de usuario/contraseña.
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'YBUTILS.viewREST.authentication.YBTokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
     )
 }
 
