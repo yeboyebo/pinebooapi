@@ -8,6 +8,27 @@ from pineboolib.application.parsers import parser_qsa as qsaparser
 #from pineboolib.application.parsers import qsaparser
 from pineboolib.application.utils import path
 qsaparser.USE_THREADS = False
+import os
+import threading
+from pineboolib.application.database import pnconnectionmanager
+
+
+def _enumerate_seguro(self):
+    """Igual que PNConnectionManager.enumerate pero iterando sobre una copia.
+
+    El original recorre connections_dict mientras otros hilos añaden o quitan conexiones
+    ("dictionary changed size during iteration" con varios hilos sirviendo peticiones).
+    """
+    dict_ = {}
+    id_thread = str(threading.current_thread().ident)
+    for key, value in list(self.connections_dict.items()):
+        connection_data = key.split("|")
+        if connection_data[0] == id_thread:
+            dict_[connection_data[1]] = value
+    return dict_
+
+
+pnconnectionmanager.PNConnectionManager.enumerate = _enumerate_seguro
 
 
 def nombre_session():
@@ -33,7 +54,9 @@ CONFIG.set_value("ebcomportamiento/parseProject", False)
 if temp_dir:
     pineboolib_app.PROJECT.tmpdir = temp_dir
 
-pineboolib_app.PROJECT.conn_manager.set_max_connections_limit(100)
+# Pool de SQLAlchemy por proceso: pool_size=N y max_overflow=N+10. Con 100 (el valor de siempre)
+# runserver acumulaba decenas de conexiones inactivas; en producción se fija en el Deployment.
+pineboolib_app.PROJECT.conn_manager.set_max_connections_limit(int(os.environ.get("POOL_CONNECTION_LIMIT", 100)))
 main.startup_framework(SQL_CONN)
 pineboolib_app.PROJECT.no_python_cache = False
 pineboolib_app.SHOW_CURSOR_EVENTS = False
