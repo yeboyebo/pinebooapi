@@ -18,8 +18,9 @@ DATABASES = {
         'NAME': os.environ.get('DBNAME'),
         'USER': os.environ.get('DBUSER'),
         'PASSWORD': os.environ.get('DBPASSWORD'),
-        'HOST': 'dbhost',
-        'PORT': os.environ.get('DBPOST'),
+        # Antes fijo a 'dbhost' (extra_hosts de docker-compose); en k8s llega DBHOST.
+        'HOST': os.environ.get('DBHOST', 'dbhost'),
+        'PORT': os.environ.get('DBPORT', os.environ.get('DBPOST')),
         'ATOMIC_REQUESTS': False
     }
 }
