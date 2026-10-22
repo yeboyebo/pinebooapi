@@ -2,7 +2,8 @@ from django.utils.translation import ugettext_lazy as _
 # from django.core.exceptions import PermissionDenied as djPermissionDenied
 from django.http import HttpResponseRedirect
 from django.conf import settings
-from django.utils import six
+# django.utils.six desaparecio en Django 3.0: sin esto el manejador de errores no se importa y todo error es un 500.
+import six
 from django.utils.encoding import force_text
 
 from rest_framework.views import exception_handler
